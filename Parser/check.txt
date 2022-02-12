@@ -1,0 +1,38 @@
+
+(
+    int result := 0
+    int number := 5
+    proc fibo (result, number)
+    (
+        int adder1 := 1
+        int adder2 := 1
+        result := 1
+        int i := 3
+        while i not equal number do
+        (
+            i := i add 1
+            result := adder1 add adder2
+            adder1 := adder2
+            adder2 := result
+        )
+    )
+    int first := 0
+    int second := 1
+    result := 0
+    int i := 0
+    proc fibo_r (first, second, result, number, i)
+    (
+        if i not equal number
+        (
+            i := i add 1
+            result := first add second
+            first := second
+            second := result
+            fibo_r(first, second, result, number, i)
+        )
+        else
+        (
+            result := second
+        )
+    )
+)

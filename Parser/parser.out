@@ -1,0 +1,4028 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> sentence_groups
+Rule 2     sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS
+Rule 3     sentence_groups -> OPBR EOS sentence_group CLBR EOS
+Rule 4     sentence_groups -> OPBR EOS sentence_group CLBR
+Rule 5     sentence_groups -> EOS OPBR EOS sentence_group CLBR
+Rule 6     sentence_groups -> sentence
+Rule 7     sentence_group -> sentence_group sentence
+Rule 8     sentence_group -> sentence
+Rule 9     sentence -> definition EOS
+Rule 10    sentence -> if
+Rule 11    sentence -> while
+Rule 12    sentence -> if_err
+Rule 13    sentence -> while_err
+Rule 14    sentence -> procedure
+Rule 15    sentence -> call_procedure EOS
+Rule 16    sentence -> robot_command EOS
+Rule 17    sentence -> map_setting EOS
+Rule 18    sentence -> error
+Rule 19    definition -> INT VARIABLE EQUAL math_expr
+Rule 20    definition -> CINT VARIABLE EQUAL math_expr
+Rule 21    definition -> BOOLEAN VARIABLE EQUAL logic_expr
+Rule 22    definition -> CBOOLEAN VARIABLE EQUAL logic_expr
+Rule 23    definition -> VARIABLE ASSIGN math_expr
+Rule 24    definition -> VARIABLE ASSIGN logic_expr
+Rule 25    definition -> MAP VARIABLE
+Rule 26    math_expr -> INC math_first math_second
+Rule 27    math_expr -> DEC math_first math_second
+Rule 28    math_expr -> math_cmd empty
+Rule 29    math_expr -> VARIABLE
+Rule 30    math_expr -> number empty
+Rule 31    number -> NUM
+Rule 32    bool -> TRUE
+Rule 33    bool -> FALSE
+Rule 34    math_first -> math_expr
+Rule 35    math_first -> call_procedure
+Rule 36    math_second -> math_first
+Rule 37    math_second -> logic_expr
+Rule 38    logic_expr -> NOT logic_expr
+Rule 39    logic_expr -> NOT call_procedure
+Rule 40    logic_expr -> OR or_elem or_elem
+Rule 41    logic_expr -> GT math_expr math_expr
+Rule 42    logic_expr -> LT math_expr math_expr
+Rule 43    logic_expr -> logic_cmd
+Rule 44    logic_expr -> bool
+Rule 45    or_elem -> logic_expr
+Rule 46    or_elem -> call_procedure
+Rule 47    procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+Rule 48    call_procedure -> VARIABLE OPSQBR varlist CLSQBR
+Rule 49    varlist -> varlist VARIABLE
+Rule 50    varlist -> VARIABLE
+Rule 51    if_err -> IF error sentence_groups ELSE sentence_groups
+Rule 52    if_err -> IF error sentence_groups
+Rule 53    while_err -> WHILE error DO sentence_groups
+Rule 54    while_err -> WHILE error
+Rule 55    if -> IF logic_expr sentence_groups ELSE sentence_groups
+Rule 56    if -> IF logic_expr sentence_groups
+Rule 57    while -> WHILE logic_expr DO sentence_groups
+Rule 58    robot_command -> logic_cmd
+Rule 59    robot_command -> rot_dir
+Rule 60    robot_command -> math_cmd
+Rule 61    rot_dir -> BACK
+Rule 62    rot_dir -> RIGHT
+Rule 63    rot_dir -> LEFT
+Rule 64    logic_cmd -> STEP
+Rule 65    math_cmd -> LOOK
+Rule 66    map_setting -> BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+Rule 67    map_setting -> EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+Rule 68    map_setting -> SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+Rule 69    map_setting -> CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+Rule 70    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASSIGN               : 23 24
+BACK                 : 61
+BAR                  : 66
+BOOLEAN              : 21
+CBOOLEAN             : 22
+CINT                 : 20
+CLBR                 : 2 3 4 5
+CLR                  : 69
+CLSQBR               : 47 48 66 67 68 69
+DEC                  : 27
+DO                   : 53 57
+ELSE                 : 51 55
+EMP                  : 67
+EOS                  : 2 2 2 3 3 4 5 5 9 15 16 17
+EQUAL                : 19 20 21 22
+FALSE                : 33
+GT                   : 41
+IF                   : 51 52 55 56
+INC                  : 26
+INT                  : 19
+LEFT                 : 63
+LOOK                 : 65
+LT                   : 42
+MAP                  : 25
+NOT                  : 38 39
+NUM                  : 31
+OPBR                 : 2 3 4 5
+OPSQBR               : 47 48 66 67 68 69
+OR                   : 40
+PROC                 : 47
+RIGHT                : 62
+SET                  : 68
+STEP                 : 64
+TRUE                 : 32
+VARIABLE             : 19 20 21 22 23 24 25 29 47 48 49 50 66 66 67 67 68 68 69 69
+WHILE                : 53 54 57
+error                : 18 51 52 53 54
+
+Nonterminals, with rules where they appear
+
+bool                 : 44
+call_procedure       : 15 35 39 46
+definition           : 9
+empty                : 28 30
+if                   : 10
+if_err               : 12
+logic_cmd            : 43 58
+logic_expr           : 21 22 24 37 38 45 55 56 57
+map_setting          : 17
+math_cmd             : 28 60
+math_expr            : 19 20 23 34 41 41 42 42 66 66 67 67 68 68 69 69
+math_first           : 26 27 36
+math_second          : 26 27
+number               : 30
+or_elem              : 40 40
+procedure            : 14
+program              : 0
+robot_command        : 16
+rot_dir              : 59
+sentence             : 6 7 8
+sentence_group       : 2 3 4 5 7
+sentence_groups      : 1 47 51 51 52 53 55 55 56 57
+varlist              : 47 48 49
+while                : 11
+while_err            : 13
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    program                        shift and go to state 1
+    sentence_groups                shift and go to state 2
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> sentence_groups .
+
+    $end            reduce using rule 1 (program -> sentence_groups .)
+
+
+state 3
+
+    (2) sentence_groups -> EOS . OPBR EOS sentence_group CLBR EOS
+    (5) sentence_groups -> EOS . OPBR EOS sentence_group CLBR
+
+    OPBR            shift and go to state 37
+
+
+state 4
+
+    (3) sentence_groups -> OPBR . EOS sentence_group CLBR EOS
+    (4) sentence_groups -> OPBR . EOS sentence_group CLBR
+
+    EOS             shift and go to state 38
+
+
+state 5
+
+    (6) sentence_groups -> sentence .
+
+    $end            reduce using rule 6 (sentence_groups -> sentence .)
+    ELSE            reduce using rule 6 (sentence_groups -> sentence .)
+    CLBR            reduce using rule 6 (sentence_groups -> sentence .)
+    error           reduce using rule 6 (sentence_groups -> sentence .)
+    INT             reduce using rule 6 (sentence_groups -> sentence .)
+    CINT            reduce using rule 6 (sentence_groups -> sentence .)
+    BOOLEAN         reduce using rule 6 (sentence_groups -> sentence .)
+    CBOOLEAN        reduce using rule 6 (sentence_groups -> sentence .)
+    VARIABLE        reduce using rule 6 (sentence_groups -> sentence .)
+    MAP             reduce using rule 6 (sentence_groups -> sentence .)
+    IF              reduce using rule 6 (sentence_groups -> sentence .)
+    WHILE           reduce using rule 6 (sentence_groups -> sentence .)
+    PROC            reduce using rule 6 (sentence_groups -> sentence .)
+    BAR             reduce using rule 6 (sentence_groups -> sentence .)
+    EMP             reduce using rule 6 (sentence_groups -> sentence .)
+    SET             reduce using rule 6 (sentence_groups -> sentence .)
+    CLR             reduce using rule 6 (sentence_groups -> sentence .)
+    STEP            reduce using rule 6 (sentence_groups -> sentence .)
+    BACK            reduce using rule 6 (sentence_groups -> sentence .)
+    RIGHT           reduce using rule 6 (sentence_groups -> sentence .)
+    LEFT            reduce using rule 6 (sentence_groups -> sentence .)
+    LOOK            reduce using rule 6 (sentence_groups -> sentence .)
+
+
+state 6
+
+    (9) sentence -> definition . EOS
+
+    EOS             shift and go to state 39
+
+
+state 7
+
+    (10) sentence -> if .
+
+    $end            reduce using rule 10 (sentence -> if .)
+    CLBR            reduce using rule 10 (sentence -> if .)
+    error           reduce using rule 10 (sentence -> if .)
+    INT             reduce using rule 10 (sentence -> if .)
+    CINT            reduce using rule 10 (sentence -> if .)
+    BOOLEAN         reduce using rule 10 (sentence -> if .)
+    CBOOLEAN        reduce using rule 10 (sentence -> if .)
+    VARIABLE        reduce using rule 10 (sentence -> if .)
+    MAP             reduce using rule 10 (sentence -> if .)
+    IF              reduce using rule 10 (sentence -> if .)
+    WHILE           reduce using rule 10 (sentence -> if .)
+    PROC            reduce using rule 10 (sentence -> if .)
+    BAR             reduce using rule 10 (sentence -> if .)
+    EMP             reduce using rule 10 (sentence -> if .)
+    SET             reduce using rule 10 (sentence -> if .)
+    CLR             reduce using rule 10 (sentence -> if .)
+    STEP            reduce using rule 10 (sentence -> if .)
+    BACK            reduce using rule 10 (sentence -> if .)
+    RIGHT           reduce using rule 10 (sentence -> if .)
+    LEFT            reduce using rule 10 (sentence -> if .)
+    LOOK            reduce using rule 10 (sentence -> if .)
+    ELSE            reduce using rule 10 (sentence -> if .)
+
+
+state 8
+
+    (11) sentence -> while .
+
+    $end            reduce using rule 11 (sentence -> while .)
+    CLBR            reduce using rule 11 (sentence -> while .)
+    error           reduce using rule 11 (sentence -> while .)
+    INT             reduce using rule 11 (sentence -> while .)
+    CINT            reduce using rule 11 (sentence -> while .)
+    BOOLEAN         reduce using rule 11 (sentence -> while .)
+    CBOOLEAN        reduce using rule 11 (sentence -> while .)
+    VARIABLE        reduce using rule 11 (sentence -> while .)
+    MAP             reduce using rule 11 (sentence -> while .)
+    IF              reduce using rule 11 (sentence -> while .)
+    WHILE           reduce using rule 11 (sentence -> while .)
+    PROC            reduce using rule 11 (sentence -> while .)
+    BAR             reduce using rule 11 (sentence -> while .)
+    EMP             reduce using rule 11 (sentence -> while .)
+    SET             reduce using rule 11 (sentence -> while .)
+    CLR             reduce using rule 11 (sentence -> while .)
+    STEP            reduce using rule 11 (sentence -> while .)
+    BACK            reduce using rule 11 (sentence -> while .)
+    RIGHT           reduce using rule 11 (sentence -> while .)
+    LEFT            reduce using rule 11 (sentence -> while .)
+    LOOK            reduce using rule 11 (sentence -> while .)
+    ELSE            reduce using rule 11 (sentence -> while .)
+
+
+state 9
+
+    (12) sentence -> if_err .
+
+    $end            reduce using rule 12 (sentence -> if_err .)
+    CLBR            reduce using rule 12 (sentence -> if_err .)
+    error           reduce using rule 12 (sentence -> if_err .)
+    INT             reduce using rule 12 (sentence -> if_err .)
+    CINT            reduce using rule 12 (sentence -> if_err .)
+    BOOLEAN         reduce using rule 12 (sentence -> if_err .)
+    CBOOLEAN        reduce using rule 12 (sentence -> if_err .)
+    VARIABLE        reduce using rule 12 (sentence -> if_err .)
+    MAP             reduce using rule 12 (sentence -> if_err .)
+    IF              reduce using rule 12 (sentence -> if_err .)
+    WHILE           reduce using rule 12 (sentence -> if_err .)
+    PROC            reduce using rule 12 (sentence -> if_err .)
+    BAR             reduce using rule 12 (sentence -> if_err .)
+    EMP             reduce using rule 12 (sentence -> if_err .)
+    SET             reduce using rule 12 (sentence -> if_err .)
+    CLR             reduce using rule 12 (sentence -> if_err .)
+    STEP            reduce using rule 12 (sentence -> if_err .)
+    BACK            reduce using rule 12 (sentence -> if_err .)
+    RIGHT           reduce using rule 12 (sentence -> if_err .)
+    LEFT            reduce using rule 12 (sentence -> if_err .)
+    LOOK            reduce using rule 12 (sentence -> if_err .)
+    ELSE            reduce using rule 12 (sentence -> if_err .)
+
+
+state 10
+
+    (13) sentence -> while_err .
+
+    $end            reduce using rule 13 (sentence -> while_err .)
+    CLBR            reduce using rule 13 (sentence -> while_err .)
+    error           reduce using rule 13 (sentence -> while_err .)
+    INT             reduce using rule 13 (sentence -> while_err .)
+    CINT            reduce using rule 13 (sentence -> while_err .)
+    BOOLEAN         reduce using rule 13 (sentence -> while_err .)
+    CBOOLEAN        reduce using rule 13 (sentence -> while_err .)
+    VARIABLE        reduce using rule 13 (sentence -> while_err .)
+    MAP             reduce using rule 13 (sentence -> while_err .)
+    IF              reduce using rule 13 (sentence -> while_err .)
+    WHILE           reduce using rule 13 (sentence -> while_err .)
+    PROC            reduce using rule 13 (sentence -> while_err .)
+    BAR             reduce using rule 13 (sentence -> while_err .)
+    EMP             reduce using rule 13 (sentence -> while_err .)
+    SET             reduce using rule 13 (sentence -> while_err .)
+    CLR             reduce using rule 13 (sentence -> while_err .)
+    STEP            reduce using rule 13 (sentence -> while_err .)
+    BACK            reduce using rule 13 (sentence -> while_err .)
+    RIGHT           reduce using rule 13 (sentence -> while_err .)
+    LEFT            reduce using rule 13 (sentence -> while_err .)
+    LOOK            reduce using rule 13 (sentence -> while_err .)
+    ELSE            reduce using rule 13 (sentence -> while_err .)
+
+
+state 11
+
+    (14) sentence -> procedure .
+
+    $end            reduce using rule 14 (sentence -> procedure .)
+    CLBR            reduce using rule 14 (sentence -> procedure .)
+    error           reduce using rule 14 (sentence -> procedure .)
+    INT             reduce using rule 14 (sentence -> procedure .)
+    CINT            reduce using rule 14 (sentence -> procedure .)
+    BOOLEAN         reduce using rule 14 (sentence -> procedure .)
+    CBOOLEAN        reduce using rule 14 (sentence -> procedure .)
+    VARIABLE        reduce using rule 14 (sentence -> procedure .)
+    MAP             reduce using rule 14 (sentence -> procedure .)
+    IF              reduce using rule 14 (sentence -> procedure .)
+    WHILE           reduce using rule 14 (sentence -> procedure .)
+    PROC            reduce using rule 14 (sentence -> procedure .)
+    BAR             reduce using rule 14 (sentence -> procedure .)
+    EMP             reduce using rule 14 (sentence -> procedure .)
+    SET             reduce using rule 14 (sentence -> procedure .)
+    CLR             reduce using rule 14 (sentence -> procedure .)
+    STEP            reduce using rule 14 (sentence -> procedure .)
+    BACK            reduce using rule 14 (sentence -> procedure .)
+    RIGHT           reduce using rule 14 (sentence -> procedure .)
+    LEFT            reduce using rule 14 (sentence -> procedure .)
+    LOOK            reduce using rule 14 (sentence -> procedure .)
+    ELSE            reduce using rule 14 (sentence -> procedure .)
+
+
+state 12
+
+    (15) sentence -> call_procedure . EOS
+
+    EOS             shift and go to state 40
+
+
+state 13
+
+    (16) sentence -> robot_command . EOS
+
+    EOS             shift and go to state 41
+
+
+state 14
+
+    (17) sentence -> map_setting . EOS
+
+    EOS             shift and go to state 42
+
+
+state 15
+
+    (18) sentence -> error .
+
+    $end            reduce using rule 18 (sentence -> error .)
+    CLBR            reduce using rule 18 (sentence -> error .)
+    error           reduce using rule 18 (sentence -> error .)
+    INT             reduce using rule 18 (sentence -> error .)
+    CINT            reduce using rule 18 (sentence -> error .)
+    BOOLEAN         reduce using rule 18 (sentence -> error .)
+    CBOOLEAN        reduce using rule 18 (sentence -> error .)
+    VARIABLE        reduce using rule 18 (sentence -> error .)
+    MAP             reduce using rule 18 (sentence -> error .)
+    IF              reduce using rule 18 (sentence -> error .)
+    WHILE           reduce using rule 18 (sentence -> error .)
+    PROC            reduce using rule 18 (sentence -> error .)
+    BAR             reduce using rule 18 (sentence -> error .)
+    EMP             reduce using rule 18 (sentence -> error .)
+    SET             reduce using rule 18 (sentence -> error .)
+    CLR             reduce using rule 18 (sentence -> error .)
+    STEP            reduce using rule 18 (sentence -> error .)
+    BACK            reduce using rule 18 (sentence -> error .)
+    RIGHT           reduce using rule 18 (sentence -> error .)
+    LEFT            reduce using rule 18 (sentence -> error .)
+    LOOK            reduce using rule 18 (sentence -> error .)
+    ELSE            reduce using rule 18 (sentence -> error .)
+
+
+state 16
+
+    (19) definition -> INT . VARIABLE EQUAL math_expr
+
+    VARIABLE        shift and go to state 43
+
+
+state 17
+
+    (23) definition -> VARIABLE . ASSIGN math_expr
+    (24) definition -> VARIABLE . ASSIGN logic_expr
+    (48) call_procedure -> VARIABLE . OPSQBR varlist CLSQBR
+
+    ASSIGN          shift and go to state 44
+    OPSQBR          shift and go to state 45
+
+
+state 18
+
+    (20) definition -> CINT . VARIABLE EQUAL math_expr
+
+    VARIABLE        shift and go to state 46
+
+
+state 19
+
+    (21) definition -> BOOLEAN . VARIABLE EQUAL logic_expr
+
+    VARIABLE        shift and go to state 47
+
+
+state 20
+
+    (22) definition -> CBOOLEAN . VARIABLE EQUAL logic_expr
+
+    VARIABLE        shift and go to state 48
+
+
+state 21
+
+    (25) definition -> MAP . VARIABLE
+
+    VARIABLE        shift and go to state 49
+
+
+state 22
+
+    (55) if -> IF . logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> IF . logic_expr sentence_groups
+    (51) if_err -> IF . error sentence_groups ELSE sentence_groups
+    (52) if_err -> IF . error sentence_groups
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    error           shift and go to state 51
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    logic_expr                     shift and go to state 50
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 23
+
+    (57) while -> WHILE . logic_expr DO sentence_groups
+    (53) while_err -> WHILE . error DO sentence_groups
+    (54) while_err -> WHILE . error
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    error           shift and go to state 61
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    logic_expr                     shift and go to state 60
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 24
+
+    (47) procedure -> PROC . VARIABLE OPSQBR varlist CLSQBR sentence_groups
+
+    VARIABLE        shift and go to state 62
+
+
+state 25
+
+    (58) robot_command -> logic_cmd .
+
+    EOS             reduce using rule 58 (robot_command -> logic_cmd .)
+
+
+state 26
+
+    (59) robot_command -> rot_dir .
+
+    EOS             reduce using rule 59 (robot_command -> rot_dir .)
+
+
+state 27
+
+    (60) robot_command -> math_cmd .
+
+    EOS             reduce using rule 60 (robot_command -> math_cmd .)
+
+
+state 28
+
+    (66) map_setting -> BAR . OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    OPSQBR          shift and go to state 63
+
+
+state 29
+
+    (67) map_setting -> EMP . OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    OPSQBR          shift and go to state 64
+
+
+state 30
+
+    (68) map_setting -> SET . OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    OPSQBR          shift and go to state 65
+
+
+state 31
+
+    (69) map_setting -> CLR . OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    OPSQBR          shift and go to state 66
+
+
+state 32
+
+    (64) logic_cmd -> STEP .
+
+    EOS             reduce using rule 64 (logic_cmd -> STEP .)
+    OPBR            reduce using rule 64 (logic_cmd -> STEP .)
+    error           reduce using rule 64 (logic_cmd -> STEP .)
+    INT             reduce using rule 64 (logic_cmd -> STEP .)
+    CINT            reduce using rule 64 (logic_cmd -> STEP .)
+    BOOLEAN         reduce using rule 64 (logic_cmd -> STEP .)
+    CBOOLEAN        reduce using rule 64 (logic_cmd -> STEP .)
+    VARIABLE        reduce using rule 64 (logic_cmd -> STEP .)
+    MAP             reduce using rule 64 (logic_cmd -> STEP .)
+    IF              reduce using rule 64 (logic_cmd -> STEP .)
+    WHILE           reduce using rule 64 (logic_cmd -> STEP .)
+    PROC            reduce using rule 64 (logic_cmd -> STEP .)
+    BAR             reduce using rule 64 (logic_cmd -> STEP .)
+    EMP             reduce using rule 64 (logic_cmd -> STEP .)
+    SET             reduce using rule 64 (logic_cmd -> STEP .)
+    CLR             reduce using rule 64 (logic_cmd -> STEP .)
+    STEP            reduce using rule 64 (logic_cmd -> STEP .)
+    BACK            reduce using rule 64 (logic_cmd -> STEP .)
+    RIGHT           reduce using rule 64 (logic_cmd -> STEP .)
+    LEFT            reduce using rule 64 (logic_cmd -> STEP .)
+    LOOK            reduce using rule 64 (logic_cmd -> STEP .)
+    DO              reduce using rule 64 (logic_cmd -> STEP .)
+    NOT             reduce using rule 64 (logic_cmd -> STEP .)
+    OR              reduce using rule 64 (logic_cmd -> STEP .)
+    GT              reduce using rule 64 (logic_cmd -> STEP .)
+    LT              reduce using rule 64 (logic_cmd -> STEP .)
+    TRUE            reduce using rule 64 (logic_cmd -> STEP .)
+    FALSE           reduce using rule 64 (logic_cmd -> STEP .)
+    INC             reduce using rule 64 (logic_cmd -> STEP .)
+    DEC             reduce using rule 64 (logic_cmd -> STEP .)
+    NUM             reduce using rule 64 (logic_cmd -> STEP .)
+    CLSQBR          reduce using rule 64 (logic_cmd -> STEP .)
+
+
+state 33
+
+    (61) rot_dir -> BACK .
+
+    EOS             reduce using rule 61 (rot_dir -> BACK .)
+
+
+state 34
+
+    (62) rot_dir -> RIGHT .
+
+    EOS             reduce using rule 62 (rot_dir -> RIGHT .)
+
+
+state 35
+
+    (63) rot_dir -> LEFT .
+
+    EOS             reduce using rule 63 (rot_dir -> LEFT .)
+
+
+state 36
+
+    (65) math_cmd -> LOOK .
+
+    EOS             reduce using rule 65 (math_cmd -> LOOK .)
+    INC             reduce using rule 65 (math_cmd -> LOOK .)
+    DEC             reduce using rule 65 (math_cmd -> LOOK .)
+    VARIABLE        reduce using rule 65 (math_cmd -> LOOK .)
+    LOOK            reduce using rule 65 (math_cmd -> LOOK .)
+    NUM             reduce using rule 65 (math_cmd -> LOOK .)
+    NOT             reduce using rule 65 (math_cmd -> LOOK .)
+    OR              reduce using rule 65 (math_cmd -> LOOK .)
+    GT              reduce using rule 65 (math_cmd -> LOOK .)
+    LT              reduce using rule 65 (math_cmd -> LOOK .)
+    STEP            reduce using rule 65 (math_cmd -> LOOK .)
+    TRUE            reduce using rule 65 (math_cmd -> LOOK .)
+    FALSE           reduce using rule 65 (math_cmd -> LOOK .)
+    OPBR            reduce using rule 65 (math_cmd -> LOOK .)
+    error           reduce using rule 65 (math_cmd -> LOOK .)
+    INT             reduce using rule 65 (math_cmd -> LOOK .)
+    CINT            reduce using rule 65 (math_cmd -> LOOK .)
+    BOOLEAN         reduce using rule 65 (math_cmd -> LOOK .)
+    CBOOLEAN        reduce using rule 65 (math_cmd -> LOOK .)
+    MAP             reduce using rule 65 (math_cmd -> LOOK .)
+    IF              reduce using rule 65 (math_cmd -> LOOK .)
+    WHILE           reduce using rule 65 (math_cmd -> LOOK .)
+    PROC            reduce using rule 65 (math_cmd -> LOOK .)
+    BAR             reduce using rule 65 (math_cmd -> LOOK .)
+    EMP             reduce using rule 65 (math_cmd -> LOOK .)
+    SET             reduce using rule 65 (math_cmd -> LOOK .)
+    CLR             reduce using rule 65 (math_cmd -> LOOK .)
+    BACK            reduce using rule 65 (math_cmd -> LOOK .)
+    RIGHT           reduce using rule 65 (math_cmd -> LOOK .)
+    LEFT            reduce using rule 65 (math_cmd -> LOOK .)
+    DO              reduce using rule 65 (math_cmd -> LOOK .)
+    CLSQBR          reduce using rule 65 (math_cmd -> LOOK .)
+
+
+state 37
+
+    (2) sentence_groups -> EOS OPBR . EOS sentence_group CLBR EOS
+    (5) sentence_groups -> EOS OPBR . EOS sentence_group CLBR
+
+    EOS             shift and go to state 67
+
+
+state 38
+
+    (3) sentence_groups -> OPBR EOS . sentence_group CLBR EOS
+    (4) sentence_groups -> OPBR EOS . sentence_group CLBR
+    (7) sentence_group -> . sentence_group sentence
+    (8) sentence_group -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_group                 shift and go to state 68
+    sentence                       shift and go to state 69
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 39
+
+    (9) sentence -> definition EOS .
+
+    $end            reduce using rule 9 (sentence -> definition EOS .)
+    CLBR            reduce using rule 9 (sentence -> definition EOS .)
+    error           reduce using rule 9 (sentence -> definition EOS .)
+    INT             reduce using rule 9 (sentence -> definition EOS .)
+    CINT            reduce using rule 9 (sentence -> definition EOS .)
+    BOOLEAN         reduce using rule 9 (sentence -> definition EOS .)
+    CBOOLEAN        reduce using rule 9 (sentence -> definition EOS .)
+    VARIABLE        reduce using rule 9 (sentence -> definition EOS .)
+    MAP             reduce using rule 9 (sentence -> definition EOS .)
+    IF              reduce using rule 9 (sentence -> definition EOS .)
+    WHILE           reduce using rule 9 (sentence -> definition EOS .)
+    PROC            reduce using rule 9 (sentence -> definition EOS .)
+    BAR             reduce using rule 9 (sentence -> definition EOS .)
+    EMP             reduce using rule 9 (sentence -> definition EOS .)
+    SET             reduce using rule 9 (sentence -> definition EOS .)
+    CLR             reduce using rule 9 (sentence -> definition EOS .)
+    STEP            reduce using rule 9 (sentence -> definition EOS .)
+    BACK            reduce using rule 9 (sentence -> definition EOS .)
+    RIGHT           reduce using rule 9 (sentence -> definition EOS .)
+    LEFT            reduce using rule 9 (sentence -> definition EOS .)
+    LOOK            reduce using rule 9 (sentence -> definition EOS .)
+    ELSE            reduce using rule 9 (sentence -> definition EOS .)
+
+
+state 40
+
+    (15) sentence -> call_procedure EOS .
+
+    $end            reduce using rule 15 (sentence -> call_procedure EOS .)
+    CLBR            reduce using rule 15 (sentence -> call_procedure EOS .)
+    error           reduce using rule 15 (sentence -> call_procedure EOS .)
+    INT             reduce using rule 15 (sentence -> call_procedure EOS .)
+    CINT            reduce using rule 15 (sentence -> call_procedure EOS .)
+    BOOLEAN         reduce using rule 15 (sentence -> call_procedure EOS .)
+    CBOOLEAN        reduce using rule 15 (sentence -> call_procedure EOS .)
+    VARIABLE        reduce using rule 15 (sentence -> call_procedure EOS .)
+    MAP             reduce using rule 15 (sentence -> call_procedure EOS .)
+    IF              reduce using rule 15 (sentence -> call_procedure EOS .)
+    WHILE           reduce using rule 15 (sentence -> call_procedure EOS .)
+    PROC            reduce using rule 15 (sentence -> call_procedure EOS .)
+    BAR             reduce using rule 15 (sentence -> call_procedure EOS .)
+    EMP             reduce using rule 15 (sentence -> call_procedure EOS .)
+    SET             reduce using rule 15 (sentence -> call_procedure EOS .)
+    CLR             reduce using rule 15 (sentence -> call_procedure EOS .)
+    STEP            reduce using rule 15 (sentence -> call_procedure EOS .)
+    BACK            reduce using rule 15 (sentence -> call_procedure EOS .)
+    RIGHT           reduce using rule 15 (sentence -> call_procedure EOS .)
+    LEFT            reduce using rule 15 (sentence -> call_procedure EOS .)
+    LOOK            reduce using rule 15 (sentence -> call_procedure EOS .)
+    ELSE            reduce using rule 15 (sentence -> call_procedure EOS .)
+
+
+state 41
+
+    (16) sentence -> robot_command EOS .
+
+    $end            reduce using rule 16 (sentence -> robot_command EOS .)
+    CLBR            reduce using rule 16 (sentence -> robot_command EOS .)
+    error           reduce using rule 16 (sentence -> robot_command EOS .)
+    INT             reduce using rule 16 (sentence -> robot_command EOS .)
+    CINT            reduce using rule 16 (sentence -> robot_command EOS .)
+    BOOLEAN         reduce using rule 16 (sentence -> robot_command EOS .)
+    CBOOLEAN        reduce using rule 16 (sentence -> robot_command EOS .)
+    VARIABLE        reduce using rule 16 (sentence -> robot_command EOS .)
+    MAP             reduce using rule 16 (sentence -> robot_command EOS .)
+    IF              reduce using rule 16 (sentence -> robot_command EOS .)
+    WHILE           reduce using rule 16 (sentence -> robot_command EOS .)
+    PROC            reduce using rule 16 (sentence -> robot_command EOS .)
+    BAR             reduce using rule 16 (sentence -> robot_command EOS .)
+    EMP             reduce using rule 16 (sentence -> robot_command EOS .)
+    SET             reduce using rule 16 (sentence -> robot_command EOS .)
+    CLR             reduce using rule 16 (sentence -> robot_command EOS .)
+    STEP            reduce using rule 16 (sentence -> robot_command EOS .)
+    BACK            reduce using rule 16 (sentence -> robot_command EOS .)
+    RIGHT           reduce using rule 16 (sentence -> robot_command EOS .)
+    LEFT            reduce using rule 16 (sentence -> robot_command EOS .)
+    LOOK            reduce using rule 16 (sentence -> robot_command EOS .)
+    ELSE            reduce using rule 16 (sentence -> robot_command EOS .)
+
+
+state 42
+
+    (17) sentence -> map_setting EOS .
+
+    $end            reduce using rule 17 (sentence -> map_setting EOS .)
+    CLBR            reduce using rule 17 (sentence -> map_setting EOS .)
+    error           reduce using rule 17 (sentence -> map_setting EOS .)
+    INT             reduce using rule 17 (sentence -> map_setting EOS .)
+    CINT            reduce using rule 17 (sentence -> map_setting EOS .)
+    BOOLEAN         reduce using rule 17 (sentence -> map_setting EOS .)
+    CBOOLEAN        reduce using rule 17 (sentence -> map_setting EOS .)
+    VARIABLE        reduce using rule 17 (sentence -> map_setting EOS .)
+    MAP             reduce using rule 17 (sentence -> map_setting EOS .)
+    IF              reduce using rule 17 (sentence -> map_setting EOS .)
+    WHILE           reduce using rule 17 (sentence -> map_setting EOS .)
+    PROC            reduce using rule 17 (sentence -> map_setting EOS .)
+    BAR             reduce using rule 17 (sentence -> map_setting EOS .)
+    EMP             reduce using rule 17 (sentence -> map_setting EOS .)
+    SET             reduce using rule 17 (sentence -> map_setting EOS .)
+    CLR             reduce using rule 17 (sentence -> map_setting EOS .)
+    STEP            reduce using rule 17 (sentence -> map_setting EOS .)
+    BACK            reduce using rule 17 (sentence -> map_setting EOS .)
+    RIGHT           reduce using rule 17 (sentence -> map_setting EOS .)
+    LEFT            reduce using rule 17 (sentence -> map_setting EOS .)
+    LOOK            reduce using rule 17 (sentence -> map_setting EOS .)
+    ELSE            reduce using rule 17 (sentence -> map_setting EOS .)
+
+
+state 43
+
+    (19) definition -> INT VARIABLE . EQUAL math_expr
+
+    EQUAL           shift and go to state 70
+
+
+state 44
+
+    (23) definition -> VARIABLE ASSIGN . math_expr
+    (24) definition -> VARIABLE ASSIGN . logic_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    math_expr                      shift and go to state 72
+    logic_expr                     shift and go to state 73
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 45
+
+    (48) call_procedure -> VARIABLE OPSQBR . varlist CLSQBR
+    (49) varlist -> . varlist VARIABLE
+    (50) varlist -> . VARIABLE
+
+    VARIABLE        shift and go to state 79
+
+    varlist                        shift and go to state 80
+
+state 46
+
+    (20) definition -> CINT VARIABLE . EQUAL math_expr
+
+    EQUAL           shift and go to state 81
+
+
+state 47
+
+    (21) definition -> BOOLEAN VARIABLE . EQUAL logic_expr
+
+    EQUAL           shift and go to state 82
+
+
+state 48
+
+    (22) definition -> CBOOLEAN VARIABLE . EQUAL logic_expr
+
+    EQUAL           shift and go to state 83
+
+
+state 49
+
+    (25) definition -> MAP VARIABLE .
+
+    EOS             reduce using rule 25 (definition -> MAP VARIABLE .)
+
+
+state 50
+
+    (55) if -> IF logic_expr . sentence_groups ELSE sentence_groups
+    (56) if -> IF logic_expr . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 84
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 51
+
+    (51) if_err -> IF error . sentence_groups ELSE sentence_groups
+    (52) if_err -> IF error . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 85
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 52
+
+    (38) logic_expr -> NOT . logic_expr
+    (39) logic_expr -> NOT . call_procedure
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    VARIABLE        shift and go to state 88
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    logic_expr                     shift and go to state 86
+    call_procedure                 shift and go to state 87
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 53
+
+    (40) logic_expr -> OR . or_elem or_elem
+    (45) or_elem -> . logic_expr
+    (46) or_elem -> . call_procedure
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    VARIABLE        shift and go to state 88
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    or_elem                        shift and go to state 89
+    logic_expr                     shift and go to state 90
+    call_procedure                 shift and go to state 91
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 54
+
+    (41) logic_expr -> GT . math_expr math_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 92
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 55
+
+    (42) logic_expr -> LT . math_expr math_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 93
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 56
+
+    (43) logic_expr -> logic_cmd .
+
+    EOS             reduce using rule 43 (logic_expr -> logic_cmd .)
+    OPBR            reduce using rule 43 (logic_expr -> logic_cmd .)
+    error           reduce using rule 43 (logic_expr -> logic_cmd .)
+    INT             reduce using rule 43 (logic_expr -> logic_cmd .)
+    CINT            reduce using rule 43 (logic_expr -> logic_cmd .)
+    BOOLEAN         reduce using rule 43 (logic_expr -> logic_cmd .)
+    CBOOLEAN        reduce using rule 43 (logic_expr -> logic_cmd .)
+    VARIABLE        reduce using rule 43 (logic_expr -> logic_cmd .)
+    MAP             reduce using rule 43 (logic_expr -> logic_cmd .)
+    IF              reduce using rule 43 (logic_expr -> logic_cmd .)
+    WHILE           reduce using rule 43 (logic_expr -> logic_cmd .)
+    PROC            reduce using rule 43 (logic_expr -> logic_cmd .)
+    BAR             reduce using rule 43 (logic_expr -> logic_cmd .)
+    EMP             reduce using rule 43 (logic_expr -> logic_cmd .)
+    SET             reduce using rule 43 (logic_expr -> logic_cmd .)
+    CLR             reduce using rule 43 (logic_expr -> logic_cmd .)
+    STEP            reduce using rule 43 (logic_expr -> logic_cmd .)
+    BACK            reduce using rule 43 (logic_expr -> logic_cmd .)
+    RIGHT           reduce using rule 43 (logic_expr -> logic_cmd .)
+    LEFT            reduce using rule 43 (logic_expr -> logic_cmd .)
+    LOOK            reduce using rule 43 (logic_expr -> logic_cmd .)
+    DO              reduce using rule 43 (logic_expr -> logic_cmd .)
+    NOT             reduce using rule 43 (logic_expr -> logic_cmd .)
+    OR              reduce using rule 43 (logic_expr -> logic_cmd .)
+    GT              reduce using rule 43 (logic_expr -> logic_cmd .)
+    LT              reduce using rule 43 (logic_expr -> logic_cmd .)
+    TRUE            reduce using rule 43 (logic_expr -> logic_cmd .)
+    FALSE           reduce using rule 43 (logic_expr -> logic_cmd .)
+    INC             reduce using rule 43 (logic_expr -> logic_cmd .)
+    DEC             reduce using rule 43 (logic_expr -> logic_cmd .)
+    NUM             reduce using rule 43 (logic_expr -> logic_cmd .)
+    CLSQBR          reduce using rule 43 (logic_expr -> logic_cmd .)
+
+
+state 57
+
+    (44) logic_expr -> bool .
+
+    EOS             reduce using rule 44 (logic_expr -> bool .)
+    OPBR            reduce using rule 44 (logic_expr -> bool .)
+    error           reduce using rule 44 (logic_expr -> bool .)
+    INT             reduce using rule 44 (logic_expr -> bool .)
+    CINT            reduce using rule 44 (logic_expr -> bool .)
+    BOOLEAN         reduce using rule 44 (logic_expr -> bool .)
+    CBOOLEAN        reduce using rule 44 (logic_expr -> bool .)
+    VARIABLE        reduce using rule 44 (logic_expr -> bool .)
+    MAP             reduce using rule 44 (logic_expr -> bool .)
+    IF              reduce using rule 44 (logic_expr -> bool .)
+    WHILE           reduce using rule 44 (logic_expr -> bool .)
+    PROC            reduce using rule 44 (logic_expr -> bool .)
+    BAR             reduce using rule 44 (logic_expr -> bool .)
+    EMP             reduce using rule 44 (logic_expr -> bool .)
+    SET             reduce using rule 44 (logic_expr -> bool .)
+    CLR             reduce using rule 44 (logic_expr -> bool .)
+    STEP            reduce using rule 44 (logic_expr -> bool .)
+    BACK            reduce using rule 44 (logic_expr -> bool .)
+    RIGHT           reduce using rule 44 (logic_expr -> bool .)
+    LEFT            reduce using rule 44 (logic_expr -> bool .)
+    LOOK            reduce using rule 44 (logic_expr -> bool .)
+    DO              reduce using rule 44 (logic_expr -> bool .)
+    NOT             reduce using rule 44 (logic_expr -> bool .)
+    OR              reduce using rule 44 (logic_expr -> bool .)
+    GT              reduce using rule 44 (logic_expr -> bool .)
+    LT              reduce using rule 44 (logic_expr -> bool .)
+    TRUE            reduce using rule 44 (logic_expr -> bool .)
+    FALSE           reduce using rule 44 (logic_expr -> bool .)
+    INC             reduce using rule 44 (logic_expr -> bool .)
+    DEC             reduce using rule 44 (logic_expr -> bool .)
+    NUM             reduce using rule 44 (logic_expr -> bool .)
+    CLSQBR          reduce using rule 44 (logic_expr -> bool .)
+
+
+state 58
+
+    (32) bool -> TRUE .
+
+    EOS             reduce using rule 32 (bool -> TRUE .)
+    OPBR            reduce using rule 32 (bool -> TRUE .)
+    error           reduce using rule 32 (bool -> TRUE .)
+    INT             reduce using rule 32 (bool -> TRUE .)
+    CINT            reduce using rule 32 (bool -> TRUE .)
+    BOOLEAN         reduce using rule 32 (bool -> TRUE .)
+    CBOOLEAN        reduce using rule 32 (bool -> TRUE .)
+    VARIABLE        reduce using rule 32 (bool -> TRUE .)
+    MAP             reduce using rule 32 (bool -> TRUE .)
+    IF              reduce using rule 32 (bool -> TRUE .)
+    WHILE           reduce using rule 32 (bool -> TRUE .)
+    PROC            reduce using rule 32 (bool -> TRUE .)
+    BAR             reduce using rule 32 (bool -> TRUE .)
+    EMP             reduce using rule 32 (bool -> TRUE .)
+    SET             reduce using rule 32 (bool -> TRUE .)
+    CLR             reduce using rule 32 (bool -> TRUE .)
+    STEP            reduce using rule 32 (bool -> TRUE .)
+    BACK            reduce using rule 32 (bool -> TRUE .)
+    RIGHT           reduce using rule 32 (bool -> TRUE .)
+    LEFT            reduce using rule 32 (bool -> TRUE .)
+    LOOK            reduce using rule 32 (bool -> TRUE .)
+    DO              reduce using rule 32 (bool -> TRUE .)
+    NOT             reduce using rule 32 (bool -> TRUE .)
+    OR              reduce using rule 32 (bool -> TRUE .)
+    GT              reduce using rule 32 (bool -> TRUE .)
+    LT              reduce using rule 32 (bool -> TRUE .)
+    TRUE            reduce using rule 32 (bool -> TRUE .)
+    FALSE           reduce using rule 32 (bool -> TRUE .)
+    INC             reduce using rule 32 (bool -> TRUE .)
+    DEC             reduce using rule 32 (bool -> TRUE .)
+    NUM             reduce using rule 32 (bool -> TRUE .)
+    CLSQBR          reduce using rule 32 (bool -> TRUE .)
+
+
+state 59
+
+    (33) bool -> FALSE .
+
+    EOS             reduce using rule 33 (bool -> FALSE .)
+    OPBR            reduce using rule 33 (bool -> FALSE .)
+    error           reduce using rule 33 (bool -> FALSE .)
+    INT             reduce using rule 33 (bool -> FALSE .)
+    CINT            reduce using rule 33 (bool -> FALSE .)
+    BOOLEAN         reduce using rule 33 (bool -> FALSE .)
+    CBOOLEAN        reduce using rule 33 (bool -> FALSE .)
+    VARIABLE        reduce using rule 33 (bool -> FALSE .)
+    MAP             reduce using rule 33 (bool -> FALSE .)
+    IF              reduce using rule 33 (bool -> FALSE .)
+    WHILE           reduce using rule 33 (bool -> FALSE .)
+    PROC            reduce using rule 33 (bool -> FALSE .)
+    BAR             reduce using rule 33 (bool -> FALSE .)
+    EMP             reduce using rule 33 (bool -> FALSE .)
+    SET             reduce using rule 33 (bool -> FALSE .)
+    CLR             reduce using rule 33 (bool -> FALSE .)
+    STEP            reduce using rule 33 (bool -> FALSE .)
+    BACK            reduce using rule 33 (bool -> FALSE .)
+    RIGHT           reduce using rule 33 (bool -> FALSE .)
+    LEFT            reduce using rule 33 (bool -> FALSE .)
+    LOOK            reduce using rule 33 (bool -> FALSE .)
+    DO              reduce using rule 33 (bool -> FALSE .)
+    NOT             reduce using rule 33 (bool -> FALSE .)
+    OR              reduce using rule 33 (bool -> FALSE .)
+    GT              reduce using rule 33 (bool -> FALSE .)
+    LT              reduce using rule 33 (bool -> FALSE .)
+    TRUE            reduce using rule 33 (bool -> FALSE .)
+    FALSE           reduce using rule 33 (bool -> FALSE .)
+    INC             reduce using rule 33 (bool -> FALSE .)
+    DEC             reduce using rule 33 (bool -> FALSE .)
+    NUM             reduce using rule 33 (bool -> FALSE .)
+    CLSQBR          reduce using rule 33 (bool -> FALSE .)
+
+
+state 60
+
+    (57) while -> WHILE logic_expr . DO sentence_groups
+
+    DO              shift and go to state 94
+
+
+state 61
+
+    (53) while_err -> WHILE error . DO sentence_groups
+    (54) while_err -> WHILE error .
+
+    DO              shift and go to state 95
+    $end            reduce using rule 54 (while_err -> WHILE error .)
+    CLBR            reduce using rule 54 (while_err -> WHILE error .)
+    error           reduce using rule 54 (while_err -> WHILE error .)
+    INT             reduce using rule 54 (while_err -> WHILE error .)
+    CINT            reduce using rule 54 (while_err -> WHILE error .)
+    BOOLEAN         reduce using rule 54 (while_err -> WHILE error .)
+    CBOOLEAN        reduce using rule 54 (while_err -> WHILE error .)
+    VARIABLE        reduce using rule 54 (while_err -> WHILE error .)
+    MAP             reduce using rule 54 (while_err -> WHILE error .)
+    IF              reduce using rule 54 (while_err -> WHILE error .)
+    WHILE           reduce using rule 54 (while_err -> WHILE error .)
+    PROC            reduce using rule 54 (while_err -> WHILE error .)
+    BAR             reduce using rule 54 (while_err -> WHILE error .)
+    EMP             reduce using rule 54 (while_err -> WHILE error .)
+    SET             reduce using rule 54 (while_err -> WHILE error .)
+    CLR             reduce using rule 54 (while_err -> WHILE error .)
+    STEP            reduce using rule 54 (while_err -> WHILE error .)
+    BACK            reduce using rule 54 (while_err -> WHILE error .)
+    RIGHT           reduce using rule 54 (while_err -> WHILE error .)
+    LEFT            reduce using rule 54 (while_err -> WHILE error .)
+    LOOK            reduce using rule 54 (while_err -> WHILE error .)
+    ELSE            reduce using rule 54 (while_err -> WHILE error .)
+
+
+state 62
+
+    (47) procedure -> PROC VARIABLE . OPSQBR varlist CLSQBR sentence_groups
+
+    OPSQBR          shift and go to state 96
+
+
+state 63
+
+    (66) map_setting -> BAR OPSQBR . VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 97
+
+
+state 64
+
+    (67) map_setting -> EMP OPSQBR . VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 98
+
+
+state 65
+
+    (68) map_setting -> SET OPSQBR . VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 99
+
+
+state 66
+
+    (69) map_setting -> CLR OPSQBR . VARIABLE VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 100
+
+
+state 67
+
+    (2) sentence_groups -> EOS OPBR EOS . sentence_group CLBR EOS
+    (5) sentence_groups -> EOS OPBR EOS . sentence_group CLBR
+    (7) sentence_group -> . sentence_group sentence
+    (8) sentence_group -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_group                 shift and go to state 101
+    sentence                       shift and go to state 69
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 68
+
+    (3) sentence_groups -> OPBR EOS sentence_group . CLBR EOS
+    (4) sentence_groups -> OPBR EOS sentence_group . CLBR
+    (7) sentence_group -> sentence_group . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    CLBR            shift and go to state 102
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence                       shift and go to state 103
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 69
+
+    (8) sentence_group -> sentence .
+
+    CLBR            reduce using rule 8 (sentence_group -> sentence .)
+    error           reduce using rule 8 (sentence_group -> sentence .)
+    INT             reduce using rule 8 (sentence_group -> sentence .)
+    CINT            reduce using rule 8 (sentence_group -> sentence .)
+    BOOLEAN         reduce using rule 8 (sentence_group -> sentence .)
+    CBOOLEAN        reduce using rule 8 (sentence_group -> sentence .)
+    VARIABLE        reduce using rule 8 (sentence_group -> sentence .)
+    MAP             reduce using rule 8 (sentence_group -> sentence .)
+    IF              reduce using rule 8 (sentence_group -> sentence .)
+    WHILE           reduce using rule 8 (sentence_group -> sentence .)
+    PROC            reduce using rule 8 (sentence_group -> sentence .)
+    BAR             reduce using rule 8 (sentence_group -> sentence .)
+    EMP             reduce using rule 8 (sentence_group -> sentence .)
+    SET             reduce using rule 8 (sentence_group -> sentence .)
+    CLR             reduce using rule 8 (sentence_group -> sentence .)
+    STEP            reduce using rule 8 (sentence_group -> sentence .)
+    BACK            reduce using rule 8 (sentence_group -> sentence .)
+    RIGHT           reduce using rule 8 (sentence_group -> sentence .)
+    LEFT            reduce using rule 8 (sentence_group -> sentence .)
+    LOOK            reduce using rule 8 (sentence_group -> sentence .)
+
+
+state 70
+
+    (19) definition -> INT VARIABLE EQUAL . math_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 104
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 71
+
+    (29) math_expr -> VARIABLE .
+
+    EOS             reduce using rule 29 (math_expr -> VARIABLE .)
+    INC             reduce using rule 29 (math_expr -> VARIABLE .)
+    DEC             reduce using rule 29 (math_expr -> VARIABLE .)
+    VARIABLE        reduce using rule 29 (math_expr -> VARIABLE .)
+    LOOK            reduce using rule 29 (math_expr -> VARIABLE .)
+    NUM             reduce using rule 29 (math_expr -> VARIABLE .)
+    OPBR            reduce using rule 29 (math_expr -> VARIABLE .)
+    error           reduce using rule 29 (math_expr -> VARIABLE .)
+    INT             reduce using rule 29 (math_expr -> VARIABLE .)
+    CINT            reduce using rule 29 (math_expr -> VARIABLE .)
+    BOOLEAN         reduce using rule 29 (math_expr -> VARIABLE .)
+    CBOOLEAN        reduce using rule 29 (math_expr -> VARIABLE .)
+    MAP             reduce using rule 29 (math_expr -> VARIABLE .)
+    IF              reduce using rule 29 (math_expr -> VARIABLE .)
+    WHILE           reduce using rule 29 (math_expr -> VARIABLE .)
+    PROC            reduce using rule 29 (math_expr -> VARIABLE .)
+    BAR             reduce using rule 29 (math_expr -> VARIABLE .)
+    EMP             reduce using rule 29 (math_expr -> VARIABLE .)
+    SET             reduce using rule 29 (math_expr -> VARIABLE .)
+    CLR             reduce using rule 29 (math_expr -> VARIABLE .)
+    STEP            reduce using rule 29 (math_expr -> VARIABLE .)
+    BACK            reduce using rule 29 (math_expr -> VARIABLE .)
+    RIGHT           reduce using rule 29 (math_expr -> VARIABLE .)
+    LEFT            reduce using rule 29 (math_expr -> VARIABLE .)
+    DO              reduce using rule 29 (math_expr -> VARIABLE .)
+    NOT             reduce using rule 29 (math_expr -> VARIABLE .)
+    OR              reduce using rule 29 (math_expr -> VARIABLE .)
+    GT              reduce using rule 29 (math_expr -> VARIABLE .)
+    LT              reduce using rule 29 (math_expr -> VARIABLE .)
+    TRUE            reduce using rule 29 (math_expr -> VARIABLE .)
+    FALSE           reduce using rule 29 (math_expr -> VARIABLE .)
+    CLSQBR          reduce using rule 29 (math_expr -> VARIABLE .)
+
+
+state 72
+
+    (23) definition -> VARIABLE ASSIGN math_expr .
+
+    EOS             reduce using rule 23 (definition -> VARIABLE ASSIGN math_expr .)
+
+
+state 73
+
+    (24) definition -> VARIABLE ASSIGN logic_expr .
+
+    EOS             reduce using rule 24 (definition -> VARIABLE ASSIGN logic_expr .)
+
+
+state 74
+
+    (26) math_expr -> INC . math_first math_second
+    (34) math_first -> . math_expr
+    (35) math_first -> . call_procedure
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 108
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_first                     shift and go to state 105
+    math_expr                      shift and go to state 106
+    call_procedure                 shift and go to state 107
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 75
+
+    (27) math_expr -> DEC . math_first math_second
+    (34) math_first -> . math_expr
+    (35) math_first -> . call_procedure
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 108
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_first                     shift and go to state 109
+    math_expr                      shift and go to state 106
+    call_procedure                 shift and go to state 107
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 76
+
+    (28) math_expr -> math_cmd . empty
+    (70) empty -> .
+
+    EOS             reduce using rule 70 (empty -> .)
+    INC             reduce using rule 70 (empty -> .)
+    DEC             reduce using rule 70 (empty -> .)
+    VARIABLE        reduce using rule 70 (empty -> .)
+    LOOK            reduce using rule 70 (empty -> .)
+    NUM             reduce using rule 70 (empty -> .)
+    NOT             reduce using rule 70 (empty -> .)
+    OR              reduce using rule 70 (empty -> .)
+    GT              reduce using rule 70 (empty -> .)
+    LT              reduce using rule 70 (empty -> .)
+    STEP            reduce using rule 70 (empty -> .)
+    TRUE            reduce using rule 70 (empty -> .)
+    FALSE           reduce using rule 70 (empty -> .)
+    OPBR            reduce using rule 70 (empty -> .)
+    error           reduce using rule 70 (empty -> .)
+    INT             reduce using rule 70 (empty -> .)
+    CINT            reduce using rule 70 (empty -> .)
+    BOOLEAN         reduce using rule 70 (empty -> .)
+    CBOOLEAN        reduce using rule 70 (empty -> .)
+    MAP             reduce using rule 70 (empty -> .)
+    IF              reduce using rule 70 (empty -> .)
+    WHILE           reduce using rule 70 (empty -> .)
+    PROC            reduce using rule 70 (empty -> .)
+    BAR             reduce using rule 70 (empty -> .)
+    EMP             reduce using rule 70 (empty -> .)
+    SET             reduce using rule 70 (empty -> .)
+    CLR             reduce using rule 70 (empty -> .)
+    BACK            reduce using rule 70 (empty -> .)
+    RIGHT           reduce using rule 70 (empty -> .)
+    LEFT            reduce using rule 70 (empty -> .)
+    DO              reduce using rule 70 (empty -> .)
+    CLSQBR          reduce using rule 70 (empty -> .)
+
+    empty                          shift and go to state 110
+
+state 77
+
+    (30) math_expr -> number . empty
+    (70) empty -> .
+
+    EOS             reduce using rule 70 (empty -> .)
+    INC             reduce using rule 70 (empty -> .)
+    DEC             reduce using rule 70 (empty -> .)
+    VARIABLE        reduce using rule 70 (empty -> .)
+    LOOK            reduce using rule 70 (empty -> .)
+    NUM             reduce using rule 70 (empty -> .)
+    NOT             reduce using rule 70 (empty -> .)
+    OR              reduce using rule 70 (empty -> .)
+    GT              reduce using rule 70 (empty -> .)
+    LT              reduce using rule 70 (empty -> .)
+    STEP            reduce using rule 70 (empty -> .)
+    TRUE            reduce using rule 70 (empty -> .)
+    FALSE           reduce using rule 70 (empty -> .)
+    OPBR            reduce using rule 70 (empty -> .)
+    error           reduce using rule 70 (empty -> .)
+    INT             reduce using rule 70 (empty -> .)
+    CINT            reduce using rule 70 (empty -> .)
+    BOOLEAN         reduce using rule 70 (empty -> .)
+    CBOOLEAN        reduce using rule 70 (empty -> .)
+    MAP             reduce using rule 70 (empty -> .)
+    IF              reduce using rule 70 (empty -> .)
+    WHILE           reduce using rule 70 (empty -> .)
+    PROC            reduce using rule 70 (empty -> .)
+    BAR             reduce using rule 70 (empty -> .)
+    EMP             reduce using rule 70 (empty -> .)
+    SET             reduce using rule 70 (empty -> .)
+    CLR             reduce using rule 70 (empty -> .)
+    BACK            reduce using rule 70 (empty -> .)
+    RIGHT           reduce using rule 70 (empty -> .)
+    LEFT            reduce using rule 70 (empty -> .)
+    DO              reduce using rule 70 (empty -> .)
+    CLSQBR          reduce using rule 70 (empty -> .)
+
+    empty                          shift and go to state 111
+
+state 78
+
+    (31) number -> NUM .
+
+    EOS             reduce using rule 31 (number -> NUM .)
+    INC             reduce using rule 31 (number -> NUM .)
+    DEC             reduce using rule 31 (number -> NUM .)
+    VARIABLE        reduce using rule 31 (number -> NUM .)
+    LOOK            reduce using rule 31 (number -> NUM .)
+    NUM             reduce using rule 31 (number -> NUM .)
+    NOT             reduce using rule 31 (number -> NUM .)
+    OR              reduce using rule 31 (number -> NUM .)
+    GT              reduce using rule 31 (number -> NUM .)
+    LT              reduce using rule 31 (number -> NUM .)
+    STEP            reduce using rule 31 (number -> NUM .)
+    TRUE            reduce using rule 31 (number -> NUM .)
+    FALSE           reduce using rule 31 (number -> NUM .)
+    OPBR            reduce using rule 31 (number -> NUM .)
+    error           reduce using rule 31 (number -> NUM .)
+    INT             reduce using rule 31 (number -> NUM .)
+    CINT            reduce using rule 31 (number -> NUM .)
+    BOOLEAN         reduce using rule 31 (number -> NUM .)
+    CBOOLEAN        reduce using rule 31 (number -> NUM .)
+    MAP             reduce using rule 31 (number -> NUM .)
+    IF              reduce using rule 31 (number -> NUM .)
+    WHILE           reduce using rule 31 (number -> NUM .)
+    PROC            reduce using rule 31 (number -> NUM .)
+    BAR             reduce using rule 31 (number -> NUM .)
+    EMP             reduce using rule 31 (number -> NUM .)
+    SET             reduce using rule 31 (number -> NUM .)
+    CLR             reduce using rule 31 (number -> NUM .)
+    BACK            reduce using rule 31 (number -> NUM .)
+    RIGHT           reduce using rule 31 (number -> NUM .)
+    LEFT            reduce using rule 31 (number -> NUM .)
+    DO              reduce using rule 31 (number -> NUM .)
+    CLSQBR          reduce using rule 31 (number -> NUM .)
+
+
+state 79
+
+    (50) varlist -> VARIABLE .
+
+    CLSQBR          reduce using rule 50 (varlist -> VARIABLE .)
+    VARIABLE        reduce using rule 50 (varlist -> VARIABLE .)
+
+
+state 80
+
+    (48) call_procedure -> VARIABLE OPSQBR varlist . CLSQBR
+    (49) varlist -> varlist . VARIABLE
+
+    CLSQBR          shift and go to state 113
+    VARIABLE        shift and go to state 112
+
+
+state 81
+
+    (20) definition -> CINT VARIABLE EQUAL . math_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 114
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 82
+
+    (21) definition -> BOOLEAN VARIABLE EQUAL . logic_expr
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    logic_expr                     shift and go to state 115
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 83
+
+    (22) definition -> CBOOLEAN VARIABLE EQUAL . logic_expr
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    logic_expr                     shift and go to state 116
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 84
+
+    (55) if -> IF logic_expr sentence_groups . ELSE sentence_groups
+    (56) if -> IF logic_expr sentence_groups .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 117
+    $end            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    CLBR            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    error           reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    INT             reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    CINT            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    BOOLEAN         reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    CBOOLEAN        reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    VARIABLE        reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    MAP             reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    IF              reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    WHILE           reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    PROC            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    BAR             reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    EMP             reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    SET             reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    CLR             reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    STEP            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    BACK            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    RIGHT           reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    LEFT            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+    LOOK            reduce using rule 56 (if -> IF logic_expr sentence_groups .)
+
+  ! ELSE            [ reduce using rule 56 (if -> IF logic_expr sentence_groups .) ]
+
+
+state 85
+
+    (51) if_err -> IF error sentence_groups . ELSE sentence_groups
+    (52) if_err -> IF error sentence_groups .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 118
+    $end            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    CLBR            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    error           reduce using rule 52 (if_err -> IF error sentence_groups .)
+    INT             reduce using rule 52 (if_err -> IF error sentence_groups .)
+    CINT            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    BOOLEAN         reduce using rule 52 (if_err -> IF error sentence_groups .)
+    CBOOLEAN        reduce using rule 52 (if_err -> IF error sentence_groups .)
+    VARIABLE        reduce using rule 52 (if_err -> IF error sentence_groups .)
+    MAP             reduce using rule 52 (if_err -> IF error sentence_groups .)
+    IF              reduce using rule 52 (if_err -> IF error sentence_groups .)
+    WHILE           reduce using rule 52 (if_err -> IF error sentence_groups .)
+    PROC            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    BAR             reduce using rule 52 (if_err -> IF error sentence_groups .)
+    EMP             reduce using rule 52 (if_err -> IF error sentence_groups .)
+    SET             reduce using rule 52 (if_err -> IF error sentence_groups .)
+    CLR             reduce using rule 52 (if_err -> IF error sentence_groups .)
+    STEP            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    BACK            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    RIGHT           reduce using rule 52 (if_err -> IF error sentence_groups .)
+    LEFT            reduce using rule 52 (if_err -> IF error sentence_groups .)
+    LOOK            reduce using rule 52 (if_err -> IF error sentence_groups .)
+
+  ! ELSE            [ reduce using rule 52 (if_err -> IF error sentence_groups .) ]
+
+
+state 86
+
+    (38) logic_expr -> NOT logic_expr .
+
+    EOS             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    OPBR            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    error           reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    INT             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    CINT            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    BOOLEAN         reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    CBOOLEAN        reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    VARIABLE        reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    MAP             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    IF              reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    WHILE           reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    PROC            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    BAR             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    EMP             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    SET             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    CLR             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    STEP            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    BACK            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    RIGHT           reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    LEFT            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    LOOK            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    DO              reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    NOT             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    OR              reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    GT              reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    LT              reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    TRUE            reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    FALSE           reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    INC             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    DEC             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    NUM             reduce using rule 38 (logic_expr -> NOT logic_expr .)
+    CLSQBR          reduce using rule 38 (logic_expr -> NOT logic_expr .)
+
+
+state 87
+
+    (39) logic_expr -> NOT call_procedure .
+
+    EOS             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    OPBR            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    error           reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    INT             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    CINT            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    BOOLEAN         reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    CBOOLEAN        reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    VARIABLE        reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    MAP             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    IF              reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    WHILE           reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    PROC            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    BAR             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    EMP             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    SET             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    CLR             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    STEP            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    BACK            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    RIGHT           reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    LEFT            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    LOOK            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    DO              reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    NOT             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    OR              reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    GT              reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    LT              reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    TRUE            reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    FALSE           reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    INC             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    DEC             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    NUM             reduce using rule 39 (logic_expr -> NOT call_procedure .)
+    CLSQBR          reduce using rule 39 (logic_expr -> NOT call_procedure .)
+
+
+state 88
+
+    (48) call_procedure -> VARIABLE . OPSQBR varlist CLSQBR
+
+    OPSQBR          shift and go to state 45
+
+
+state 89
+
+    (40) logic_expr -> OR or_elem . or_elem
+    (45) or_elem -> . logic_expr
+    (46) or_elem -> . call_procedure
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    VARIABLE        shift and go to state 88
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+
+    or_elem                        shift and go to state 119
+    logic_expr                     shift and go to state 90
+    call_procedure                 shift and go to state 91
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+
+state 90
+
+    (45) or_elem -> logic_expr .
+
+    NOT             reduce using rule 45 (or_elem -> logic_expr .)
+    OR              reduce using rule 45 (or_elem -> logic_expr .)
+    GT              reduce using rule 45 (or_elem -> logic_expr .)
+    LT              reduce using rule 45 (or_elem -> logic_expr .)
+    VARIABLE        reduce using rule 45 (or_elem -> logic_expr .)
+    STEP            reduce using rule 45 (or_elem -> logic_expr .)
+    TRUE            reduce using rule 45 (or_elem -> logic_expr .)
+    FALSE           reduce using rule 45 (or_elem -> logic_expr .)
+    EOS             reduce using rule 45 (or_elem -> logic_expr .)
+    OPBR            reduce using rule 45 (or_elem -> logic_expr .)
+    error           reduce using rule 45 (or_elem -> logic_expr .)
+    INT             reduce using rule 45 (or_elem -> logic_expr .)
+    CINT            reduce using rule 45 (or_elem -> logic_expr .)
+    BOOLEAN         reduce using rule 45 (or_elem -> logic_expr .)
+    CBOOLEAN        reduce using rule 45 (or_elem -> logic_expr .)
+    MAP             reduce using rule 45 (or_elem -> logic_expr .)
+    IF              reduce using rule 45 (or_elem -> logic_expr .)
+    WHILE           reduce using rule 45 (or_elem -> logic_expr .)
+    PROC            reduce using rule 45 (or_elem -> logic_expr .)
+    BAR             reduce using rule 45 (or_elem -> logic_expr .)
+    EMP             reduce using rule 45 (or_elem -> logic_expr .)
+    SET             reduce using rule 45 (or_elem -> logic_expr .)
+    CLR             reduce using rule 45 (or_elem -> logic_expr .)
+    BACK            reduce using rule 45 (or_elem -> logic_expr .)
+    RIGHT           reduce using rule 45 (or_elem -> logic_expr .)
+    LEFT            reduce using rule 45 (or_elem -> logic_expr .)
+    LOOK            reduce using rule 45 (or_elem -> logic_expr .)
+    DO              reduce using rule 45 (or_elem -> logic_expr .)
+    INC             reduce using rule 45 (or_elem -> logic_expr .)
+    DEC             reduce using rule 45 (or_elem -> logic_expr .)
+    NUM             reduce using rule 45 (or_elem -> logic_expr .)
+    CLSQBR          reduce using rule 45 (or_elem -> logic_expr .)
+
+
+state 91
+
+    (46) or_elem -> call_procedure .
+
+    NOT             reduce using rule 46 (or_elem -> call_procedure .)
+    OR              reduce using rule 46 (or_elem -> call_procedure .)
+    GT              reduce using rule 46 (or_elem -> call_procedure .)
+    LT              reduce using rule 46 (or_elem -> call_procedure .)
+    VARIABLE        reduce using rule 46 (or_elem -> call_procedure .)
+    STEP            reduce using rule 46 (or_elem -> call_procedure .)
+    TRUE            reduce using rule 46 (or_elem -> call_procedure .)
+    FALSE           reduce using rule 46 (or_elem -> call_procedure .)
+    EOS             reduce using rule 46 (or_elem -> call_procedure .)
+    OPBR            reduce using rule 46 (or_elem -> call_procedure .)
+    error           reduce using rule 46 (or_elem -> call_procedure .)
+    INT             reduce using rule 46 (or_elem -> call_procedure .)
+    CINT            reduce using rule 46 (or_elem -> call_procedure .)
+    BOOLEAN         reduce using rule 46 (or_elem -> call_procedure .)
+    CBOOLEAN        reduce using rule 46 (or_elem -> call_procedure .)
+    MAP             reduce using rule 46 (or_elem -> call_procedure .)
+    IF              reduce using rule 46 (or_elem -> call_procedure .)
+    WHILE           reduce using rule 46 (or_elem -> call_procedure .)
+    PROC            reduce using rule 46 (or_elem -> call_procedure .)
+    BAR             reduce using rule 46 (or_elem -> call_procedure .)
+    EMP             reduce using rule 46 (or_elem -> call_procedure .)
+    SET             reduce using rule 46 (or_elem -> call_procedure .)
+    CLR             reduce using rule 46 (or_elem -> call_procedure .)
+    BACK            reduce using rule 46 (or_elem -> call_procedure .)
+    RIGHT           reduce using rule 46 (or_elem -> call_procedure .)
+    LEFT            reduce using rule 46 (or_elem -> call_procedure .)
+    LOOK            reduce using rule 46 (or_elem -> call_procedure .)
+    DO              reduce using rule 46 (or_elem -> call_procedure .)
+    INC             reduce using rule 46 (or_elem -> call_procedure .)
+    DEC             reduce using rule 46 (or_elem -> call_procedure .)
+    NUM             reduce using rule 46 (or_elem -> call_procedure .)
+    CLSQBR          reduce using rule 46 (or_elem -> call_procedure .)
+
+
+state 92
+
+    (41) logic_expr -> GT math_expr . math_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 120
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 93
+
+    (42) logic_expr -> LT math_expr . math_expr
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 121
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 94
+
+    (57) while -> WHILE logic_expr DO . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 122
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 95
+
+    (53) while_err -> WHILE error DO . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 123
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 96
+
+    (47) procedure -> PROC VARIABLE OPSQBR . varlist CLSQBR sentence_groups
+    (49) varlist -> . varlist VARIABLE
+    (50) varlist -> . VARIABLE
+
+    VARIABLE        shift and go to state 79
+
+    varlist                        shift and go to state 124
+
+state 97
+
+    (66) map_setting -> BAR OPSQBR VARIABLE . VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 125
+
+
+state 98
+
+    (67) map_setting -> EMP OPSQBR VARIABLE . VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 126
+
+
+state 99
+
+    (68) map_setting -> SET OPSQBR VARIABLE . VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 127
+
+
+state 100
+
+    (69) map_setting -> CLR OPSQBR VARIABLE . VARIABLE math_expr math_expr CLSQBR
+
+    VARIABLE        shift and go to state 128
+
+
+state 101
+
+    (2) sentence_groups -> EOS OPBR EOS sentence_group . CLBR EOS
+    (5) sentence_groups -> EOS OPBR EOS sentence_group . CLBR
+    (7) sentence_group -> sentence_group . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    CLBR            shift and go to state 129
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence                       shift and go to state 103
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 102
+
+    (3) sentence_groups -> OPBR EOS sentence_group CLBR . EOS
+    (4) sentence_groups -> OPBR EOS sentence_group CLBR .
+
+    EOS             shift and go to state 130
+    $end            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    ELSE            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    CLBR            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    error           reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    INT             reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    CINT            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    BOOLEAN         reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    CBOOLEAN        reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    VARIABLE        reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    MAP             reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    IF              reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    WHILE           reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    PROC            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    BAR             reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    EMP             reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    SET             reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    CLR             reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    STEP            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    BACK            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    RIGHT           reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    LEFT            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+    LOOK            reduce using rule 4 (sentence_groups -> OPBR EOS sentence_group CLBR .)
+
+
+state 103
+
+    (7) sentence_group -> sentence_group sentence .
+
+    CLBR            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    error           reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    INT             reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    CINT            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    BOOLEAN         reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    CBOOLEAN        reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    VARIABLE        reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    MAP             reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    IF              reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    WHILE           reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    PROC            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    BAR             reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    EMP             reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    SET             reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    CLR             reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    STEP            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    BACK            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    RIGHT           reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    LEFT            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+    LOOK            reduce using rule 7 (sentence_group -> sentence_group sentence .)
+
+
+state 104
+
+    (19) definition -> INT VARIABLE EQUAL math_expr .
+
+    EOS             reduce using rule 19 (definition -> INT VARIABLE EQUAL math_expr .)
+
+
+state 105
+
+    (26) math_expr -> INC math_first . math_second
+    (36) math_second -> . math_first
+    (37) math_second -> . logic_expr
+    (34) math_first -> . math_expr
+    (35) math_first -> . call_procedure
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 108
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_first                     shift and go to state 131
+    math_second                    shift and go to state 132
+    logic_expr                     shift and go to state 133
+    math_expr                      shift and go to state 106
+    call_procedure                 shift and go to state 107
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 106
+
+    (34) math_first -> math_expr .
+
+    NOT             reduce using rule 34 (math_first -> math_expr .)
+    OR              reduce using rule 34 (math_first -> math_expr .)
+    GT              reduce using rule 34 (math_first -> math_expr .)
+    LT              reduce using rule 34 (math_first -> math_expr .)
+    INC             reduce using rule 34 (math_first -> math_expr .)
+    DEC             reduce using rule 34 (math_first -> math_expr .)
+    VARIABLE        reduce using rule 34 (math_first -> math_expr .)
+    STEP            reduce using rule 34 (math_first -> math_expr .)
+    TRUE            reduce using rule 34 (math_first -> math_expr .)
+    FALSE           reduce using rule 34 (math_first -> math_expr .)
+    LOOK            reduce using rule 34 (math_first -> math_expr .)
+    NUM             reduce using rule 34 (math_first -> math_expr .)
+    EOS             reduce using rule 34 (math_first -> math_expr .)
+    OPBR            reduce using rule 34 (math_first -> math_expr .)
+    error           reduce using rule 34 (math_first -> math_expr .)
+    INT             reduce using rule 34 (math_first -> math_expr .)
+    CINT            reduce using rule 34 (math_first -> math_expr .)
+    BOOLEAN         reduce using rule 34 (math_first -> math_expr .)
+    CBOOLEAN        reduce using rule 34 (math_first -> math_expr .)
+    MAP             reduce using rule 34 (math_first -> math_expr .)
+    IF              reduce using rule 34 (math_first -> math_expr .)
+    WHILE           reduce using rule 34 (math_first -> math_expr .)
+    PROC            reduce using rule 34 (math_first -> math_expr .)
+    BAR             reduce using rule 34 (math_first -> math_expr .)
+    EMP             reduce using rule 34 (math_first -> math_expr .)
+    SET             reduce using rule 34 (math_first -> math_expr .)
+    CLR             reduce using rule 34 (math_first -> math_expr .)
+    BACK            reduce using rule 34 (math_first -> math_expr .)
+    RIGHT           reduce using rule 34 (math_first -> math_expr .)
+    LEFT            reduce using rule 34 (math_first -> math_expr .)
+    DO              reduce using rule 34 (math_first -> math_expr .)
+    CLSQBR          reduce using rule 34 (math_first -> math_expr .)
+
+
+state 107
+
+    (35) math_first -> call_procedure .
+
+    NOT             reduce using rule 35 (math_first -> call_procedure .)
+    OR              reduce using rule 35 (math_first -> call_procedure .)
+    GT              reduce using rule 35 (math_first -> call_procedure .)
+    LT              reduce using rule 35 (math_first -> call_procedure .)
+    INC             reduce using rule 35 (math_first -> call_procedure .)
+    DEC             reduce using rule 35 (math_first -> call_procedure .)
+    VARIABLE        reduce using rule 35 (math_first -> call_procedure .)
+    STEP            reduce using rule 35 (math_first -> call_procedure .)
+    TRUE            reduce using rule 35 (math_first -> call_procedure .)
+    FALSE           reduce using rule 35 (math_first -> call_procedure .)
+    LOOK            reduce using rule 35 (math_first -> call_procedure .)
+    NUM             reduce using rule 35 (math_first -> call_procedure .)
+    EOS             reduce using rule 35 (math_first -> call_procedure .)
+    OPBR            reduce using rule 35 (math_first -> call_procedure .)
+    error           reduce using rule 35 (math_first -> call_procedure .)
+    INT             reduce using rule 35 (math_first -> call_procedure .)
+    CINT            reduce using rule 35 (math_first -> call_procedure .)
+    BOOLEAN         reduce using rule 35 (math_first -> call_procedure .)
+    CBOOLEAN        reduce using rule 35 (math_first -> call_procedure .)
+    MAP             reduce using rule 35 (math_first -> call_procedure .)
+    IF              reduce using rule 35 (math_first -> call_procedure .)
+    WHILE           reduce using rule 35 (math_first -> call_procedure .)
+    PROC            reduce using rule 35 (math_first -> call_procedure .)
+    BAR             reduce using rule 35 (math_first -> call_procedure .)
+    EMP             reduce using rule 35 (math_first -> call_procedure .)
+    SET             reduce using rule 35 (math_first -> call_procedure .)
+    CLR             reduce using rule 35 (math_first -> call_procedure .)
+    BACK            reduce using rule 35 (math_first -> call_procedure .)
+    RIGHT           reduce using rule 35 (math_first -> call_procedure .)
+    LEFT            reduce using rule 35 (math_first -> call_procedure .)
+    DO              reduce using rule 35 (math_first -> call_procedure .)
+    CLSQBR          reduce using rule 35 (math_first -> call_procedure .)
+
+
+state 108
+
+    (29) math_expr -> VARIABLE .
+    (48) call_procedure -> VARIABLE . OPSQBR varlist CLSQBR
+
+    NOT             reduce using rule 29 (math_expr -> VARIABLE .)
+    OR              reduce using rule 29 (math_expr -> VARIABLE .)
+    GT              reduce using rule 29 (math_expr -> VARIABLE .)
+    LT              reduce using rule 29 (math_expr -> VARIABLE .)
+    INC             reduce using rule 29 (math_expr -> VARIABLE .)
+    DEC             reduce using rule 29 (math_expr -> VARIABLE .)
+    VARIABLE        reduce using rule 29 (math_expr -> VARIABLE .)
+    STEP            reduce using rule 29 (math_expr -> VARIABLE .)
+    TRUE            reduce using rule 29 (math_expr -> VARIABLE .)
+    FALSE           reduce using rule 29 (math_expr -> VARIABLE .)
+    LOOK            reduce using rule 29 (math_expr -> VARIABLE .)
+    NUM             reduce using rule 29 (math_expr -> VARIABLE .)
+    EOS             reduce using rule 29 (math_expr -> VARIABLE .)
+    OPBR            reduce using rule 29 (math_expr -> VARIABLE .)
+    error           reduce using rule 29 (math_expr -> VARIABLE .)
+    INT             reduce using rule 29 (math_expr -> VARIABLE .)
+    CINT            reduce using rule 29 (math_expr -> VARIABLE .)
+    BOOLEAN         reduce using rule 29 (math_expr -> VARIABLE .)
+    CBOOLEAN        reduce using rule 29 (math_expr -> VARIABLE .)
+    MAP             reduce using rule 29 (math_expr -> VARIABLE .)
+    IF              reduce using rule 29 (math_expr -> VARIABLE .)
+    WHILE           reduce using rule 29 (math_expr -> VARIABLE .)
+    PROC            reduce using rule 29 (math_expr -> VARIABLE .)
+    BAR             reduce using rule 29 (math_expr -> VARIABLE .)
+    EMP             reduce using rule 29 (math_expr -> VARIABLE .)
+    SET             reduce using rule 29 (math_expr -> VARIABLE .)
+    CLR             reduce using rule 29 (math_expr -> VARIABLE .)
+    BACK            reduce using rule 29 (math_expr -> VARIABLE .)
+    RIGHT           reduce using rule 29 (math_expr -> VARIABLE .)
+    LEFT            reduce using rule 29 (math_expr -> VARIABLE .)
+    DO              reduce using rule 29 (math_expr -> VARIABLE .)
+    CLSQBR          reduce using rule 29 (math_expr -> VARIABLE .)
+    OPSQBR          shift and go to state 45
+
+
+state 109
+
+    (27) math_expr -> DEC math_first . math_second
+    (36) math_second -> . math_first
+    (37) math_second -> . logic_expr
+    (34) math_first -> . math_expr
+    (35) math_first -> . call_procedure
+    (38) logic_expr -> . NOT logic_expr
+    (39) logic_expr -> . NOT call_procedure
+    (40) logic_expr -> . OR or_elem or_elem
+    (41) logic_expr -> . GT math_expr math_expr
+    (42) logic_expr -> . LT math_expr math_expr
+    (43) logic_expr -> . logic_cmd
+    (44) logic_expr -> . bool
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (64) logic_cmd -> . STEP
+    (32) bool -> . TRUE
+    (33) bool -> . FALSE
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    NOT             shift and go to state 52
+    OR              shift and go to state 53
+    GT              shift and go to state 54
+    LT              shift and go to state 55
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 108
+    STEP            shift and go to state 32
+    TRUE            shift and go to state 58
+    FALSE           shift and go to state 59
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_first                     shift and go to state 131
+    math_second                    shift and go to state 134
+    logic_expr                     shift and go to state 133
+    math_expr                      shift and go to state 106
+    call_procedure                 shift and go to state 107
+    logic_cmd                      shift and go to state 56
+    bool                           shift and go to state 57
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 110
+
+    (28) math_expr -> math_cmd empty .
+
+    EOS             reduce using rule 28 (math_expr -> math_cmd empty .)
+    INC             reduce using rule 28 (math_expr -> math_cmd empty .)
+    DEC             reduce using rule 28 (math_expr -> math_cmd empty .)
+    VARIABLE        reduce using rule 28 (math_expr -> math_cmd empty .)
+    LOOK            reduce using rule 28 (math_expr -> math_cmd empty .)
+    NUM             reduce using rule 28 (math_expr -> math_cmd empty .)
+    NOT             reduce using rule 28 (math_expr -> math_cmd empty .)
+    OR              reduce using rule 28 (math_expr -> math_cmd empty .)
+    GT              reduce using rule 28 (math_expr -> math_cmd empty .)
+    LT              reduce using rule 28 (math_expr -> math_cmd empty .)
+    STEP            reduce using rule 28 (math_expr -> math_cmd empty .)
+    TRUE            reduce using rule 28 (math_expr -> math_cmd empty .)
+    FALSE           reduce using rule 28 (math_expr -> math_cmd empty .)
+    OPBR            reduce using rule 28 (math_expr -> math_cmd empty .)
+    error           reduce using rule 28 (math_expr -> math_cmd empty .)
+    INT             reduce using rule 28 (math_expr -> math_cmd empty .)
+    CINT            reduce using rule 28 (math_expr -> math_cmd empty .)
+    BOOLEAN         reduce using rule 28 (math_expr -> math_cmd empty .)
+    CBOOLEAN        reduce using rule 28 (math_expr -> math_cmd empty .)
+    MAP             reduce using rule 28 (math_expr -> math_cmd empty .)
+    IF              reduce using rule 28 (math_expr -> math_cmd empty .)
+    WHILE           reduce using rule 28 (math_expr -> math_cmd empty .)
+    PROC            reduce using rule 28 (math_expr -> math_cmd empty .)
+    BAR             reduce using rule 28 (math_expr -> math_cmd empty .)
+    EMP             reduce using rule 28 (math_expr -> math_cmd empty .)
+    SET             reduce using rule 28 (math_expr -> math_cmd empty .)
+    CLR             reduce using rule 28 (math_expr -> math_cmd empty .)
+    BACK            reduce using rule 28 (math_expr -> math_cmd empty .)
+    RIGHT           reduce using rule 28 (math_expr -> math_cmd empty .)
+    LEFT            reduce using rule 28 (math_expr -> math_cmd empty .)
+    DO              reduce using rule 28 (math_expr -> math_cmd empty .)
+    CLSQBR          reduce using rule 28 (math_expr -> math_cmd empty .)
+
+
+state 111
+
+    (30) math_expr -> number empty .
+
+    EOS             reduce using rule 30 (math_expr -> number empty .)
+    INC             reduce using rule 30 (math_expr -> number empty .)
+    DEC             reduce using rule 30 (math_expr -> number empty .)
+    VARIABLE        reduce using rule 30 (math_expr -> number empty .)
+    LOOK            reduce using rule 30 (math_expr -> number empty .)
+    NUM             reduce using rule 30 (math_expr -> number empty .)
+    NOT             reduce using rule 30 (math_expr -> number empty .)
+    OR              reduce using rule 30 (math_expr -> number empty .)
+    GT              reduce using rule 30 (math_expr -> number empty .)
+    LT              reduce using rule 30 (math_expr -> number empty .)
+    STEP            reduce using rule 30 (math_expr -> number empty .)
+    TRUE            reduce using rule 30 (math_expr -> number empty .)
+    FALSE           reduce using rule 30 (math_expr -> number empty .)
+    OPBR            reduce using rule 30 (math_expr -> number empty .)
+    error           reduce using rule 30 (math_expr -> number empty .)
+    INT             reduce using rule 30 (math_expr -> number empty .)
+    CINT            reduce using rule 30 (math_expr -> number empty .)
+    BOOLEAN         reduce using rule 30 (math_expr -> number empty .)
+    CBOOLEAN        reduce using rule 30 (math_expr -> number empty .)
+    MAP             reduce using rule 30 (math_expr -> number empty .)
+    IF              reduce using rule 30 (math_expr -> number empty .)
+    WHILE           reduce using rule 30 (math_expr -> number empty .)
+    PROC            reduce using rule 30 (math_expr -> number empty .)
+    BAR             reduce using rule 30 (math_expr -> number empty .)
+    EMP             reduce using rule 30 (math_expr -> number empty .)
+    SET             reduce using rule 30 (math_expr -> number empty .)
+    CLR             reduce using rule 30 (math_expr -> number empty .)
+    BACK            reduce using rule 30 (math_expr -> number empty .)
+    RIGHT           reduce using rule 30 (math_expr -> number empty .)
+    LEFT            reduce using rule 30 (math_expr -> number empty .)
+    DO              reduce using rule 30 (math_expr -> number empty .)
+    CLSQBR          reduce using rule 30 (math_expr -> number empty .)
+
+
+state 112
+
+    (49) varlist -> varlist VARIABLE .
+
+    CLSQBR          reduce using rule 49 (varlist -> varlist VARIABLE .)
+    VARIABLE        reduce using rule 49 (varlist -> varlist VARIABLE .)
+
+
+state 113
+
+    (48) call_procedure -> VARIABLE OPSQBR varlist CLSQBR .
+
+    EOS             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    OPBR            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    error           reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    INT             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    CINT            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    BOOLEAN         reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    CBOOLEAN        reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    VARIABLE        reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    MAP             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    IF              reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    WHILE           reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    PROC            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    BAR             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    EMP             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    SET             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    CLR             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    STEP            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    BACK            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    RIGHT           reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    LEFT            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    LOOK            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    DO              reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    NOT             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    OR              reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    GT              reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    LT              reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    TRUE            reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    FALSE           reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    INC             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    DEC             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    NUM             reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+    CLSQBR          reduce using rule 48 (call_procedure -> VARIABLE OPSQBR varlist CLSQBR .)
+
+
+state 114
+
+    (20) definition -> CINT VARIABLE EQUAL math_expr .
+
+    EOS             reduce using rule 20 (definition -> CINT VARIABLE EQUAL math_expr .)
+
+
+state 115
+
+    (21) definition -> BOOLEAN VARIABLE EQUAL logic_expr .
+
+    EOS             reduce using rule 21 (definition -> BOOLEAN VARIABLE EQUAL logic_expr .)
+
+
+state 116
+
+    (22) definition -> CBOOLEAN VARIABLE EQUAL logic_expr .
+
+    EOS             reduce using rule 22 (definition -> CBOOLEAN VARIABLE EQUAL logic_expr .)
+
+
+state 117
+
+    (55) if -> IF logic_expr sentence_groups ELSE . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 135
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 118
+
+    (51) if_err -> IF error sentence_groups ELSE . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 136
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 119
+
+    (40) logic_expr -> OR or_elem or_elem .
+
+    EOS             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    OPBR            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    error           reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    INT             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    CINT            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    BOOLEAN         reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    CBOOLEAN        reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    VARIABLE        reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    MAP             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    IF              reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    WHILE           reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    PROC            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    BAR             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    EMP             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    SET             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    CLR             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    STEP            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    BACK            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    RIGHT           reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    LEFT            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    LOOK            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    DO              reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    NOT             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    OR              reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    GT              reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    LT              reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    TRUE            reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    FALSE           reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    INC             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    DEC             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    NUM             reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+    CLSQBR          reduce using rule 40 (logic_expr -> OR or_elem or_elem .)
+
+
+state 120
+
+    (41) logic_expr -> GT math_expr math_expr .
+
+    EOS             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    OPBR            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    error           reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    INT             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    CINT            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    BOOLEAN         reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    CBOOLEAN        reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    VARIABLE        reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    MAP             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    IF              reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    WHILE           reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    PROC            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    BAR             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    EMP             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    SET             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    CLR             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    STEP            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    BACK            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    RIGHT           reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    LEFT            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    LOOK            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    DO              reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    NOT             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    OR              reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    GT              reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    LT              reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    TRUE            reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    FALSE           reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    INC             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    DEC             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    NUM             reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+    CLSQBR          reduce using rule 41 (logic_expr -> GT math_expr math_expr .)
+
+
+state 121
+
+    (42) logic_expr -> LT math_expr math_expr .
+
+    EOS             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    OPBR            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    error           reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    INT             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    CINT            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    BOOLEAN         reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    CBOOLEAN        reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    VARIABLE        reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    MAP             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    IF              reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    WHILE           reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    PROC            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    BAR             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    EMP             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    SET             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    CLR             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    STEP            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    BACK            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    RIGHT           reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    LEFT            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    LOOK            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    DO              reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    NOT             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    OR              reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    GT              reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    LT              reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    TRUE            reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    FALSE           reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    INC             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    DEC             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    NUM             reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+    CLSQBR          reduce using rule 42 (logic_expr -> LT math_expr math_expr .)
+
+
+state 122
+
+    (57) while -> WHILE logic_expr DO sentence_groups .
+
+    $end            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    CLBR            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    error           reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    INT             reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    CINT            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    BOOLEAN         reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    CBOOLEAN        reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    VARIABLE        reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    MAP             reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    IF              reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    WHILE           reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    PROC            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    BAR             reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    EMP             reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    SET             reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    CLR             reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    STEP            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    BACK            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    RIGHT           reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    LEFT            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    LOOK            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+    ELSE            reduce using rule 57 (while -> WHILE logic_expr DO sentence_groups .)
+
+
+state 123
+
+    (53) while_err -> WHILE error DO sentence_groups .
+
+    $end            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    CLBR            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    error           reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    INT             reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    CINT            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    BOOLEAN         reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    CBOOLEAN        reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    VARIABLE        reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    MAP             reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    IF              reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    WHILE           reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    PROC            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    BAR             reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    EMP             reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    SET             reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    CLR             reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    STEP            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    BACK            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    RIGHT           reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    LEFT            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    LOOK            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+    ELSE            reduce using rule 53 (while_err -> WHILE error DO sentence_groups .)
+
+
+state 124
+
+    (47) procedure -> PROC VARIABLE OPSQBR varlist . CLSQBR sentence_groups
+    (49) varlist -> varlist . VARIABLE
+
+    CLSQBR          shift and go to state 137
+    VARIABLE        shift and go to state 112
+
+
+state 125
+
+    (66) map_setting -> BAR OPSQBR VARIABLE VARIABLE . math_expr math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 138
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 126
+
+    (67) map_setting -> EMP OPSQBR VARIABLE VARIABLE . math_expr math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 139
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 127
+
+    (68) map_setting -> SET OPSQBR VARIABLE VARIABLE . math_expr math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 140
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 128
+
+    (69) map_setting -> CLR OPSQBR VARIABLE VARIABLE . math_expr math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 141
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 129
+
+    (2) sentence_groups -> EOS OPBR EOS sentence_group CLBR . EOS
+    (5) sentence_groups -> EOS OPBR EOS sentence_group CLBR .
+
+    EOS             shift and go to state 142
+    $end            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    ELSE            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    CLBR            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    error           reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    INT             reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    CINT            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    BOOLEAN         reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    CBOOLEAN        reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    VARIABLE        reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    MAP             reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    IF              reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    WHILE           reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    PROC            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    BAR             reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    EMP             reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    SET             reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    CLR             reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    STEP            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    BACK            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    RIGHT           reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    LEFT            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+    LOOK            reduce using rule 5 (sentence_groups -> EOS OPBR EOS sentence_group CLBR .)
+
+
+state 130
+
+    (3) sentence_groups -> OPBR EOS sentence_group CLBR EOS .
+
+    $end            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    ELSE            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    CLBR            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    error           reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    INT             reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    CINT            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    BOOLEAN         reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    CBOOLEAN        reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    VARIABLE        reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    MAP             reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    IF              reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    WHILE           reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    PROC            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    BAR             reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    EMP             reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    SET             reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    CLR             reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    STEP            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    BACK            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    RIGHT           reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    LEFT            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+    LOOK            reduce using rule 3 (sentence_groups -> OPBR EOS sentence_group CLBR EOS .)
+
+
+state 131
+
+    (36) math_second -> math_first .
+
+    EOS             reduce using rule 36 (math_second -> math_first .)
+    OPBR            reduce using rule 36 (math_second -> math_first .)
+    error           reduce using rule 36 (math_second -> math_first .)
+    INT             reduce using rule 36 (math_second -> math_first .)
+    CINT            reduce using rule 36 (math_second -> math_first .)
+    BOOLEAN         reduce using rule 36 (math_second -> math_first .)
+    CBOOLEAN        reduce using rule 36 (math_second -> math_first .)
+    VARIABLE        reduce using rule 36 (math_second -> math_first .)
+    MAP             reduce using rule 36 (math_second -> math_first .)
+    IF              reduce using rule 36 (math_second -> math_first .)
+    WHILE           reduce using rule 36 (math_second -> math_first .)
+    PROC            reduce using rule 36 (math_second -> math_first .)
+    BAR             reduce using rule 36 (math_second -> math_first .)
+    EMP             reduce using rule 36 (math_second -> math_first .)
+    SET             reduce using rule 36 (math_second -> math_first .)
+    CLR             reduce using rule 36 (math_second -> math_first .)
+    STEP            reduce using rule 36 (math_second -> math_first .)
+    BACK            reduce using rule 36 (math_second -> math_first .)
+    RIGHT           reduce using rule 36 (math_second -> math_first .)
+    LEFT            reduce using rule 36 (math_second -> math_first .)
+    LOOK            reduce using rule 36 (math_second -> math_first .)
+    DO              reduce using rule 36 (math_second -> math_first .)
+    NOT             reduce using rule 36 (math_second -> math_first .)
+    OR              reduce using rule 36 (math_second -> math_first .)
+    GT              reduce using rule 36 (math_second -> math_first .)
+    LT              reduce using rule 36 (math_second -> math_first .)
+    TRUE            reduce using rule 36 (math_second -> math_first .)
+    FALSE           reduce using rule 36 (math_second -> math_first .)
+    INC             reduce using rule 36 (math_second -> math_first .)
+    DEC             reduce using rule 36 (math_second -> math_first .)
+    NUM             reduce using rule 36 (math_second -> math_first .)
+    CLSQBR          reduce using rule 36 (math_second -> math_first .)
+
+
+state 132
+
+    (26) math_expr -> INC math_first math_second .
+
+    EOS             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    INC             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    DEC             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    VARIABLE        reduce using rule 26 (math_expr -> INC math_first math_second .)
+    LOOK            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    NUM             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    NOT             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    OR              reduce using rule 26 (math_expr -> INC math_first math_second .)
+    GT              reduce using rule 26 (math_expr -> INC math_first math_second .)
+    LT              reduce using rule 26 (math_expr -> INC math_first math_second .)
+    STEP            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    TRUE            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    FALSE           reduce using rule 26 (math_expr -> INC math_first math_second .)
+    OPBR            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    error           reduce using rule 26 (math_expr -> INC math_first math_second .)
+    INT             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    CINT            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    BOOLEAN         reduce using rule 26 (math_expr -> INC math_first math_second .)
+    CBOOLEAN        reduce using rule 26 (math_expr -> INC math_first math_second .)
+    MAP             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    IF              reduce using rule 26 (math_expr -> INC math_first math_second .)
+    WHILE           reduce using rule 26 (math_expr -> INC math_first math_second .)
+    PROC            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    BAR             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    EMP             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    SET             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    CLR             reduce using rule 26 (math_expr -> INC math_first math_second .)
+    BACK            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    RIGHT           reduce using rule 26 (math_expr -> INC math_first math_second .)
+    LEFT            reduce using rule 26 (math_expr -> INC math_first math_second .)
+    DO              reduce using rule 26 (math_expr -> INC math_first math_second .)
+    CLSQBR          reduce using rule 26 (math_expr -> INC math_first math_second .)
+
+
+state 133
+
+    (37) math_second -> logic_expr .
+
+    EOS             reduce using rule 37 (math_second -> logic_expr .)
+    OPBR            reduce using rule 37 (math_second -> logic_expr .)
+    error           reduce using rule 37 (math_second -> logic_expr .)
+    INT             reduce using rule 37 (math_second -> logic_expr .)
+    CINT            reduce using rule 37 (math_second -> logic_expr .)
+    BOOLEAN         reduce using rule 37 (math_second -> logic_expr .)
+    CBOOLEAN        reduce using rule 37 (math_second -> logic_expr .)
+    VARIABLE        reduce using rule 37 (math_second -> logic_expr .)
+    MAP             reduce using rule 37 (math_second -> logic_expr .)
+    IF              reduce using rule 37 (math_second -> logic_expr .)
+    WHILE           reduce using rule 37 (math_second -> logic_expr .)
+    PROC            reduce using rule 37 (math_second -> logic_expr .)
+    BAR             reduce using rule 37 (math_second -> logic_expr .)
+    EMP             reduce using rule 37 (math_second -> logic_expr .)
+    SET             reduce using rule 37 (math_second -> logic_expr .)
+    CLR             reduce using rule 37 (math_second -> logic_expr .)
+    STEP            reduce using rule 37 (math_second -> logic_expr .)
+    BACK            reduce using rule 37 (math_second -> logic_expr .)
+    RIGHT           reduce using rule 37 (math_second -> logic_expr .)
+    LEFT            reduce using rule 37 (math_second -> logic_expr .)
+    LOOK            reduce using rule 37 (math_second -> logic_expr .)
+    DO              reduce using rule 37 (math_second -> logic_expr .)
+    NOT             reduce using rule 37 (math_second -> logic_expr .)
+    OR              reduce using rule 37 (math_second -> logic_expr .)
+    GT              reduce using rule 37 (math_second -> logic_expr .)
+    LT              reduce using rule 37 (math_second -> logic_expr .)
+    TRUE            reduce using rule 37 (math_second -> logic_expr .)
+    FALSE           reduce using rule 37 (math_second -> logic_expr .)
+    INC             reduce using rule 37 (math_second -> logic_expr .)
+    DEC             reduce using rule 37 (math_second -> logic_expr .)
+    NUM             reduce using rule 37 (math_second -> logic_expr .)
+    CLSQBR          reduce using rule 37 (math_second -> logic_expr .)
+
+
+state 134
+
+    (27) math_expr -> DEC math_first math_second .
+
+    EOS             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    INC             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    DEC             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    VARIABLE        reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    LOOK            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    NUM             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    NOT             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    OR              reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    GT              reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    LT              reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    STEP            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    TRUE            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    FALSE           reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    OPBR            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    error           reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    INT             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    CINT            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    BOOLEAN         reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    CBOOLEAN        reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    MAP             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    IF              reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    WHILE           reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    PROC            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    BAR             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    EMP             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    SET             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    CLR             reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    BACK            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    RIGHT           reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    LEFT            reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    DO              reduce using rule 27 (math_expr -> DEC math_first math_second .)
+    CLSQBR          reduce using rule 27 (math_expr -> DEC math_first math_second .)
+
+
+state 135
+
+    (55) if -> IF logic_expr sentence_groups ELSE sentence_groups .
+
+    $end            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    CLBR            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    error           reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    INT             reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    CINT            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    BOOLEAN         reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    CBOOLEAN        reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    VARIABLE        reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    MAP             reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    IF              reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    WHILE           reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    PROC            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    BAR             reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    EMP             reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    SET             reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    CLR             reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    STEP            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    BACK            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    RIGHT           reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    LEFT            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    LOOK            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+    ELSE            reduce using rule 55 (if -> IF logic_expr sentence_groups ELSE sentence_groups .)
+
+
+state 136
+
+    (51) if_err -> IF error sentence_groups ELSE sentence_groups .
+
+    $end            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    CLBR            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    error           reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    INT             reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    CINT            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    BOOLEAN         reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    CBOOLEAN        reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    VARIABLE        reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    MAP             reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    IF              reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    WHILE           reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    PROC            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    BAR             reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    EMP             reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    SET             reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    CLR             reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    STEP            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    BACK            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    RIGHT           reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    LEFT            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    LOOK            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+    ELSE            reduce using rule 51 (if_err -> IF error sentence_groups ELSE sentence_groups .)
+
+
+state 137
+
+    (47) procedure -> PROC VARIABLE OPSQBR varlist CLSQBR . sentence_groups
+    (2) sentence_groups -> . EOS OPBR EOS sentence_group CLBR EOS
+    (3) sentence_groups -> . OPBR EOS sentence_group CLBR EOS
+    (4) sentence_groups -> . OPBR EOS sentence_group CLBR
+    (5) sentence_groups -> . EOS OPBR EOS sentence_group CLBR
+    (6) sentence_groups -> . sentence
+    (9) sentence -> . definition EOS
+    (10) sentence -> . if
+    (11) sentence -> . while
+    (12) sentence -> . if_err
+    (13) sentence -> . while_err
+    (14) sentence -> . procedure
+    (15) sentence -> . call_procedure EOS
+    (16) sentence -> . robot_command EOS
+    (17) sentence -> . map_setting EOS
+    (18) sentence -> . error
+    (19) definition -> . INT VARIABLE EQUAL math_expr
+    (20) definition -> . CINT VARIABLE EQUAL math_expr
+    (21) definition -> . BOOLEAN VARIABLE EQUAL logic_expr
+    (22) definition -> . CBOOLEAN VARIABLE EQUAL logic_expr
+    (23) definition -> . VARIABLE ASSIGN math_expr
+    (24) definition -> . VARIABLE ASSIGN logic_expr
+    (25) definition -> . MAP VARIABLE
+    (55) if -> . IF logic_expr sentence_groups ELSE sentence_groups
+    (56) if -> . IF logic_expr sentence_groups
+    (57) while -> . WHILE logic_expr DO sentence_groups
+    (51) if_err -> . IF error sentence_groups ELSE sentence_groups
+    (52) if_err -> . IF error sentence_groups
+    (53) while_err -> . WHILE error DO sentence_groups
+    (54) while_err -> . WHILE error
+    (47) procedure -> . PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups
+    (48) call_procedure -> . VARIABLE OPSQBR varlist CLSQBR
+    (58) robot_command -> . logic_cmd
+    (59) robot_command -> . rot_dir
+    (60) robot_command -> . math_cmd
+    (66) map_setting -> . BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (67) map_setting -> . EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (68) map_setting -> . SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (69) map_setting -> . CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR
+    (64) logic_cmd -> . STEP
+    (61) rot_dir -> . BACK
+    (62) rot_dir -> . RIGHT
+    (63) rot_dir -> . LEFT
+    (65) math_cmd -> . LOOK
+
+    EOS             shift and go to state 3
+    OPBR            shift and go to state 4
+    error           shift and go to state 15
+    INT             shift and go to state 16
+    CINT            shift and go to state 18
+    BOOLEAN         shift and go to state 19
+    CBOOLEAN        shift and go to state 20
+    VARIABLE        shift and go to state 17
+    MAP             shift and go to state 21
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    PROC            shift and go to state 24
+    BAR             shift and go to state 28
+    EMP             shift and go to state 29
+    SET             shift and go to state 30
+    CLR             shift and go to state 31
+    STEP            shift and go to state 32
+    BACK            shift and go to state 33
+    RIGHT           shift and go to state 34
+    LEFT            shift and go to state 35
+    LOOK            shift and go to state 36
+
+    sentence_groups                shift and go to state 143
+    sentence                       shift and go to state 5
+    definition                     shift and go to state 6
+    if                             shift and go to state 7
+    while                          shift and go to state 8
+    if_err                         shift and go to state 9
+    while_err                      shift and go to state 10
+    procedure                      shift and go to state 11
+    call_procedure                 shift and go to state 12
+    robot_command                  shift and go to state 13
+    map_setting                    shift and go to state 14
+    logic_cmd                      shift and go to state 25
+    rot_dir                        shift and go to state 26
+    math_cmd                       shift and go to state 27
+
+state 138
+
+    (66) map_setting -> BAR OPSQBR VARIABLE VARIABLE math_expr . math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 144
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 139
+
+    (67) map_setting -> EMP OPSQBR VARIABLE VARIABLE math_expr . math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 145
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 140
+
+    (68) map_setting -> SET OPSQBR VARIABLE VARIABLE math_expr . math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 146
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 141
+
+    (69) map_setting -> CLR OPSQBR VARIABLE VARIABLE math_expr . math_expr CLSQBR
+    (26) math_expr -> . INC math_first math_second
+    (27) math_expr -> . DEC math_first math_second
+    (28) math_expr -> . math_cmd empty
+    (29) math_expr -> . VARIABLE
+    (30) math_expr -> . number empty
+    (65) math_cmd -> . LOOK
+    (31) number -> . NUM
+
+    INC             shift and go to state 74
+    DEC             shift and go to state 75
+    VARIABLE        shift and go to state 71
+    LOOK            shift and go to state 36
+    NUM             shift and go to state 78
+
+    math_expr                      shift and go to state 147
+    math_cmd                       shift and go to state 76
+    number                         shift and go to state 77
+
+state 142
+
+    (2) sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .
+
+    $end            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    ELSE            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    CLBR            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    error           reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    INT             reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    CINT            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    BOOLEAN         reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    CBOOLEAN        reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    VARIABLE        reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    MAP             reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    IF              reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    WHILE           reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    PROC            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    BAR             reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    EMP             reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    SET             reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    CLR             reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    STEP            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    BACK            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    RIGHT           reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    LEFT            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+    LOOK            reduce using rule 2 (sentence_groups -> EOS OPBR EOS sentence_group CLBR EOS .)
+
+
+state 143
+
+    (47) procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .
+
+    $end            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    CLBR            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    error           reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    INT             reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    CINT            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    BOOLEAN         reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    CBOOLEAN        reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    VARIABLE        reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    MAP             reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    IF              reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    WHILE           reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    PROC            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    BAR             reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    EMP             reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    SET             reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    CLR             reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    STEP            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    BACK            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    RIGHT           reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    LEFT            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    LOOK            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+    ELSE            reduce using rule 47 (procedure -> PROC VARIABLE OPSQBR varlist CLSQBR sentence_groups .)
+
+
+state 144
+
+    (66) map_setting -> BAR OPSQBR VARIABLE VARIABLE math_expr math_expr . CLSQBR
+
+    CLSQBR          shift and go to state 148
+
+
+state 145
+
+    (67) map_setting -> EMP OPSQBR VARIABLE VARIABLE math_expr math_expr . CLSQBR
+
+    CLSQBR          shift and go to state 149
+
+
+state 146
+
+    (68) map_setting -> SET OPSQBR VARIABLE VARIABLE math_expr math_expr . CLSQBR
+
+    CLSQBR          shift and go to state 150
+
+
+state 147
+
+    (69) map_setting -> CLR OPSQBR VARIABLE VARIABLE math_expr math_expr . CLSQBR
+
+    CLSQBR          shift and go to state 151
+
+
+state 148
+
+    (66) map_setting -> BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .
+
+    EOS             reduce using rule 66 (map_setting -> BAR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .)
+
+
+state 149
+
+    (67) map_setting -> EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .
+
+    EOS             reduce using rule 67 (map_setting -> EMP OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .)
+
+
+state 150
+
+    (68) map_setting -> SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .
+
+    EOS             reduce using rule 68 (map_setting -> SET OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .)
+
+
+state 151
+
+    (69) map_setting -> CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .
+
+    EOS             reduce using rule 69 (map_setting -> CLR OPSQBR VARIABLE VARIABLE math_expr math_expr CLSQBR .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ELSE in state 84 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 85 resolved as shift
